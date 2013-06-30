@@ -5,7 +5,7 @@ function DominoJS() {
 DominoJS._modules = {};
 
 // constants
-DominoJS.LATENCY = 20;
+DominoJS.LATENCY = 700;
 
 // OOP
 DominoJS.copyPrototype = function (descendant, parent) {
@@ -17,19 +17,32 @@ DominoJS.copyPrototype = function (descendant, parent) {
 
 // modules to add to the HTML page
 DominoJS.Modules = [];
-DominoJS.Modules.push('class/Editor');
+// three.js libs
+DominoJS.Modules.push('libs/three.min');
+DominoJS.Modules.push('libs/three.keyboard');
+DominoJS.Modules.push('libs/Detector');
+DominoJS.Modules.push('libs/Stats');
+DominoJS.Modules.push('libs/three.trackball');
+DominoJS.Modules.push('libs/FirstPersonControl');
+DominoJS.Modules.push('libs/threex.fullsize');
+DominoJS.Modules.push('libs/threex.windowResize');
+DominoJS.Modules.push('libs/scroller');
+// domino.js libs
+DominoJS.Modules.push('class/Coordinates3D');
 DominoJS.Modules.push('class/DOM');
+DominoJS.Modules.push('class/Editor');
+DominoJS.Modules.push('class/Footer');
+DominoJS.Modules.push('class/Header');
 DominoJS.Modules.push('class/PropertyPage');
+DominoJS.Modules.push('class/Listing');
+DominoJS.Modules.push('class/ToolsPanel');
+DominoJS.Modules.push('class/UIBuilder');
+DominoJS.Modules.push('class/Utils');
+// univers
 DominoJS.Modules.push('class/universe/Element3D');
 DominoJS.Modules.push('class/universe/Domino');
 DominoJS.Modules.push('class/universe/Sphere');
-DominoJS.Modules.push('libs/three.min');
-DominoJS.Modules.push('libs/Detector');
-DominoJS.Modules.push('libs/Stats');
-//DominoJS.Modules.push('libs/three.trackball');
-DominoJS.Modules.push('libs/three.keyboard');
-DominoJS.Modules.push('libs/threex.fullsize');
-DominoJS.Modules.push('libs/threex.windowResize');
+DominoJS.Modules.push('class/universe/Universe');
 
 // load sign displayer
 DominoJS.showLoadingSign = function (scriptname) {

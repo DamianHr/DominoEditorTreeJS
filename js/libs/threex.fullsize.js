@@ -19,7 +19,7 @@ THREEx.FullScreen = THREEx.FullScreen || {};
  */
 THREEx.FullScreen.available = function () {
     return this._hasWebkitFullScreen || this._hasMozFullScreen;
-}
+};
 
 /**
  * test if fullscreen is currently activated
@@ -33,8 +33,9 @@ THREEx.FullScreen.activated = function () {
         return document.mozFullScreen;
     } else {
         console.assert(false);
+        return false;
     }
-}
+};
 
 /**
  * Request fullscreen on a given element
@@ -49,7 +50,7 @@ THREEx.FullScreen.request = function (element) {
     } else {
         console.assert(false);
     }
-}
+};
 
 /**
  * Cancel fullscreen
@@ -62,11 +63,11 @@ THREEx.FullScreen.cancel = function () {
     } else {
         console.assert(false);
     }
-}
+};
 
 // internal functions to know which fullscreen API implementation is available
-THREEx.FullScreen._hasWebkitFullScreen = 'webkitCancelFullScreen' in document ? true : false;
-THREEx.FullScreen._hasMozFullScreen = 'mozCancelFullScreen' in document ? true : false;
+THREEx.FullScreen._hasWebkitFullScreen = !!('webkitCancelFullScreen' in document);
+THREEx.FullScreen._hasMozFullScreen = !!('mozCancelFullScreen' in document);
 
 /**
  * Bind a key to renderer screenshot
@@ -76,7 +77,7 @@ THREEx.FullScreen.bindKey = function (opts) {
     opts = opts || {};
     var charCode = opts.charCode || 'f'.charCodeAt(0);
     var dblclick = opts.dblclick !== undefined ? opts.dblclick : false;
-    var element = opts.element
+    var element = opts.element;
 
     var toggle = function () {
         if (THREEx.FullScreen.activated()) {
@@ -84,7 +85,7 @@ THREEx.FullScreen.bindKey = function (opts) {
         } else {
             THREEx.FullScreen.request(element);
         }
-    }
+    };
 
     var onKeyPress = function (event) {
         if (event.which !== charCode)    return;
@@ -101,4 +102,4 @@ THREEx.FullScreen.bindKey = function (opts) {
             dblclick && document.removeEventListener('dblclick', toggle, false);
         }
     };
-}
+};

@@ -1,32 +1,31 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head>
-    <title>Domino Editor</title>
+<head lang="fr">
+    <title>Domino.JS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style/editor.css">
     <link rel="stylesheet" type="text/css" href="style/extra.css">
+    <link rel="stylesheet" type="text/css" href="style/scroller.css">
     <script type="text/javascript" src="./js/DominoJS.js"></script>
     <script type="text/javascript">
         function initDominoJS() {
-            DominoJS.editor = new Editor();
-
-            DominoJS.propertyPage = new PropertyPage();
+            DominoJS.uiBuilder = new UIBuilder();
         }
-
         DominoJS.start(initDominoJS);
     </script>
 </head>
 <body id="body">
 <div class="colmask">
-    <div class="header">
-        head
+    <div class="header" id="header">
     </div>
-    <div class="colmid">
-        <canvas class="main-canvas" style="width: 100%; height: 100%"></canvas>
+    <div class="colmid" id="colmid">
     </div>
     <div class="colright" id="colright">
     </div>
-    <div class="footer">
-        footer
+    <div class="footer" id="footer">
+        &nbsp;
     </div>
 </div>
 

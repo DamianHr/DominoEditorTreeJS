@@ -7,6 +7,37 @@
 function DOM() {
 }
 
+DOM.hookEvent = function (obj, eventName, func) {
+    if (obj.attachEvent) {
+        obj.attachEvent("on" + eventName, func);
+    }
+    else if (obj.addEventListener) {
+        obj.addEventListener(eventName, func, true);
+    }
+}
+
+DOM.getEventTarget = function (evt, tgtName) {
+    if (!evt) evt = window.event;
+    if (!evt) return null;
+    var obj = evt.srcElement;
+    if (!obj) obj = evt.target;
+    if (!obj) return null;
+
+    if (!tgtName) return obj;
+    try {
+        if (obj.getAttribute("name") == tgtName) return obj;
+
+        if (obj.tagName == "HTML") return null;
+        while (obj && obj.tagName != "BODY") {
+            obj = obj.parentNode;
+            if (obj && obj.getAttribute("name") == tgtName) return obj;
+        }
+    }
+    catch (e) { /*TODO*/
+    }
+    return null;
+}
+
 DOM.createElement = function (tagName, name, type) {
     var newEle;
     try {

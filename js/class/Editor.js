@@ -3,8 +3,12 @@
  * Date: 29/06/13
  * Time: 00:12
  */
+var scene, camera, renderer, container, stats, controls;
+var keyboard = new THREEx.KeyboardState();
+
 function Editor() {
-    var scene, camera, renderer, container, stats; //, controls;
+
+    this.element = document.getElementById("colmid");
 
     // SCENE
     scene = new THREE.Scene();
@@ -20,12 +24,13 @@ function Editor() {
         renderer = new THREE.WebGLRenderer({antialias: true});
     else
         renderer = new THREE.CanvasRenderer();
-    renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+    renderer.setSize(SCREEN_WIDTH - 20, SCREEN_HEIGHT - 50);
     container = document.createElement('div');
-    document.body.appendChild(container);
+    this.element.appendChild(container);
     container.appendChild(renderer.domElement);
     // CONTROLS
-    //controls = new THREE.TrackballControls(camera);
+    controls = new THREE.TrackballControls(camera, this.element);
+    //controls = new THREE.FirstPersonControls(camera);
     // EVENTS
     THREEx.WindowResize(renderer, camera);
     THREEx.FullScreen.bindKey({ charCode: 'm'.charCodeAt(0) });
@@ -36,9 +41,10 @@ function Editor() {
     stats.domElement.style.zIndex = 100;
     container.appendChild(stats.domElement);
     // LIGHT
-    var light = new THREE.PointLight(0xffffff);
-    light.position.set(0, 250, 0);
-    scene.add(light);
+    /*var light = new THREE.PointLight(0xffffff);
+     light.position.set(0, 250, 0);
+     light.castShadow = true;
+     scene.add(light);*/
 
     // FLOOR
     var floorTexture = new THREE.ImageUtils.loadTexture('img/checkerboard.jpg');
@@ -50,9 +56,60 @@ function Editor() {
     floor.position.y = 0;
     floor.rotation.x = Math.PI / 2;
     scene.add(floor);
+
     // SKYBOX
     var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
-    var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0x9999ff, side: THREE.BackSide });
+    var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0xC0C0C0, side: THREE.BackSide });
     var skyBox = new THREE.Mesh(skyBoxGeometry, skyBoxMaterial);
     scene.add(skyBox);
+
+    this.animate();
 }
+
+Editor.prototype.animate = function () {
+    requestAnimationFrame(Editor.prototype.animate);
+    renderer.render(scene, camera);
+    Editor.prototype.update();
+};
+
+Editor.prototype.update = function () {
+    if (keyboard.pressed("z")) {
+        // do something
+    }
+    controls.rotateSpeed = 0.05;
+    controls.update();
+    //console.log(camera.getPosition);
+    stats.update();
+};
+
+var elementTexture = new THREE.ImageUtils.loadTexture('./img/crate.gif');
+var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
+var wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, transparent: true });
+var multiMaterial = [ elementMaterial, wireframeMaterial ];
+
+Editor.prototype.createElement = function (element) {
+    var geometry;
+    switch (element.type) {
+        case ELEMENT.DOMINO :
+        {
+            //x, y, x
+            geometry = new THREE.CubeGeometry(element.x, element.y, element.x, 2, 2, 2);
+        }
+            break;
+        case ELEMENT.SPHERE :
+        {
+            geometry = new THREE.SphereGeometry(element.radius, 40, 40);
+        }
+            break;
+        default:
+        {
+        }
+    }
+
+    //form.overdraw = true;
+    var object3D = THREE.SceneUtils.createMultiMaterialObject(
+        geometry.clone(), multiMaterial);
+    //x, y, z
+    object3D.position.set(element.position.x, geometry.height / 2 + element.position.y, element.position.z);
+    scene.add(object3D);
+};

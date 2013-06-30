@@ -6,20 +6,20 @@
 
 function PropertyPage() {
 
-    var row, cell;
+    var titleDiv, row, cell;
 
     //this.element = DOM.createElement("DIV", "propertypageDiv");
     //this.element.className = "propertypage";
     this.element = document.getElementById("colright")
+
+    titleDiv = DOM.createElement("DIV", "propertypageTitle");
+    titleDiv.className = "propertypageTitle leftTitle";
+    titleDiv.innerHTML = "Properties";
+    this.element.appendChild(titleDiv);
+
     this.table = DOM.createElement("table", "propertypage");
     this.table.className = "propertypage";
     this.element.appendChild(this.table);
-
-    row = this.table.insertRow(-1);
-    cell = document.createElement("TH");
-    cell.setAttribute("colSpan", "2");
-    row.appendChild(cell);
-    cell.innerHTML = "Properties";
 
     // positon fields
     for (var i = 0; i < 3; i++) {
