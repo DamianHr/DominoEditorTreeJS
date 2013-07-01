@@ -47,12 +47,14 @@ DominoJS.Modules.push('libs/threex.windowResize');
 DominoJS.Modules.push('libs/scroller');
 // domino.js libs
 DominoJS.Modules.push('class/Coordinates3D');
+DominoJS.Modules.push('class/ColorPalette');
 DominoJS.Modules.push('class/DOM');
 DominoJS.Modules.push('class/Editor');
 DominoJS.Modules.push('class/Footer');
 DominoJS.Modules.push('class/Header');
-DominoJS.Modules.push('class/PropertyPage');
 DominoJS.Modules.push('class/Listing');
+DominoJS.Modules.push('class/NumberInput');
+DominoJS.Modules.push('class/Properties');
 DominoJS.Modules.push('class/ToolsPanel');
 DominoJS.Modules.push('class/UIBuilder');
 DominoJS.Modules.push('class/Utils');
@@ -60,7 +62,7 @@ DominoJS.Modules.push('class/Utils');
 DominoJS.Modules.push('class/universe/Element3D');
 DominoJS.Modules.push('class/universe/Domino');
 DominoJS.Modules.push('class/universe/Sphere');
-DominoJS.Modules.push('class/universe/Universe');
+DominoJS.Modules.push('class/universe/Univers');
 
 // load sign displayer
 DominoJS.showLoadingSign = function (scriptname) {
