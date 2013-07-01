@@ -4,8 +4,24 @@
  * Time: 00:28
  */
 
-function Coordinates3D(x, y, x) {
+function Coordinates3D(x, y, z) {
     this._x = x;
     this._y = y;
     this._z = z;
 }
+
+// Persistence function
+
+Coordinates3D.prototype.save = function () {
+    var object = {};
+    object.x = this._x;
+    object.y = this._y;
+    object.z = this._z;
+    return object;
+};
+
+Coordinates3D.prototype.load = function (object) {
+    this._x = object.x;
+    this._y = object.y;
+    this._z = object.z;
+};

@@ -14,7 +14,7 @@ function UIBuilder() {
         DominoJS.toolsPanel.tools = [];
         DominoJS.toolsPanel.tools.push(ToolsPanel.prototype.addTool(ELEMENT.DOMINO, "./img/domino.png"));
         DominoJS.toolsPanel.tools.push(ToolsPanel.prototype.addTool(ELEMENT.SPHERE, "./img/sphere.jpg"));
-        DominoJS.propertypage = new PropertyPage();
+        DominoJS.propertypage = new Properties();
         DominoJS.listing = new Listing();
         DominoJS.footer = new Footer();
     } catch (e) {

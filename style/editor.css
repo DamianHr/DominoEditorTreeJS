@@ -31,7 +31,7 @@ html, body, .colmask {
     margin: 10px 5px;
     color: #A1A1A0;
     padding: 5px;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .header .titleInput {
@@ -44,7 +44,7 @@ html, body, .colmask {
 }
 
 .header .headerButton {
-    padding: 5px 20px;
+    padding: 5px 15px;
     cursor: pointer;
     /*background: -moz-linear-gradient(
         top,
@@ -81,11 +81,20 @@ html, body, .colmask {
     position: absolute;
     left: 50px;
     bottom: 80px;
-
 }
 
 .toolspanel div {
+    width: 70px;
+    height: 70px;
+    background: #7A7A7A;
+    border: 1px solid #242627;
+    border-radius: 10px;
+    margin: 0 5px;
     display: inline-block;
+}
+
+.toolspanel div:hover {
+    background: #393C3E;
 }
 
 .toolspanel img {

@@ -30,6 +30,7 @@ function Editor() {
     container.appendChild(renderer.domElement);
     // CONTROLS
     controls = new THREE.TrackballControls(camera, this.element);
+    controls.rotateSpeed = 0.05;
     //controls = new THREE.FirstPersonControls(camera);
     // EVENTS
     THREEx.WindowResize(renderer, camera);
@@ -76,7 +77,7 @@ Editor.prototype.update = function () {
     if (keyboard.pressed("z")) {
         // do something
     }
-    controls.rotateSpeed = 0.05;
+
     controls.update();
     //console.log(camera.getPosition);
     stats.update();
@@ -90,26 +91,15 @@ var multiMaterial = [ elementMaterial, wireframeMaterial ];
 Editor.prototype.createElement = function (element) {
     var geometry;
     switch (element.type) {
-        case ELEMENT.DOMINO :
-        {
-            //x, y, x
+        case ELEMENT.DOMINO : //x, y, z
             geometry = new THREE.CubeGeometry(element.x, element.y, element.x, 2, 2, 2);
-        }
             break;
         case ELEMENT.SPHERE :
-        {
             geometry = new THREE.SphereGeometry(element.radius, 40, 40);
-        }
             break;
-        default:
-        {
-        }
     }
 
-    //form.overdraw = true;
-    var object3D = THREE.SceneUtils.createMultiMaterialObject(
-        geometry.clone(), multiMaterial);
-    //x, y, z
+    var object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
     object3D.position.set(element.position.x, geometry.height / 2 + element.position.y, element.position.z);
     scene.add(object3D);
 };

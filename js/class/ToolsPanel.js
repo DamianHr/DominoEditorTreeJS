@@ -30,14 +30,14 @@ ToolsPanel.prototype.addTool = function (type, imagePath) {
     else {
         toolDiv.innerHtml = type.name;
     }
-
-    DOM.hookEvent(toolDiv, "mouseover", function (event) {
-        switchClass(event, 'hovering')
-    });
-    DOM.hookEvent(toolDiv, "mouseout", function (event) {
-        switchClass(event, '')
-    });
-
+    /*
+     DOM.hookEvent(toolDiv, "mouseover", function (event) {
+     switchClass(event, 'hovering')
+     });
+     DOM.hookEvent(toolDiv, "mouseout", function (event) {
+     switchClass(event, '')
+     });
+     */
     //toolDiv.onclick = function(event) {return ToolsPanel.prototype.activate(event)};
 
     ToolsPanel.panel.appendChild(toolDiv);

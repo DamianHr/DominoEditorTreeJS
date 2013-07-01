@@ -4,8 +4,21 @@ function DominoJS() {
 //global variables
 DominoJS._modules = {};
 
+//global functions
+DominoJS.donothing = function () {
+};
+DominoJS.returntrue = function () {
+    return true;
+};
+DominoJS.returnfalse = function () {
+    return false;
+};
+
 // constants
 DominoJS.LATENCY = 700;
+
+// objects
+DominoJS.univers = {};
 
 // OOP
 DominoJS.copyPrototype = function (descendant, parent) {
@@ -13,6 +26,11 @@ DominoJS.copyPrototype = function (descendant, parent) {
         descendant.prototype[m] = parent.prototype[m];
     }
     descendant.parent = parent;
+};
+
+DominoJS.getClassName = function (obj) {
+    if (!obj) return null;
+    return obj.constructor.toString().replace(/^.*function\s+([^\s]*|[^\(]*)\([^\x00]+$/, "$1");
 };
 
 // modules to add to the HTML page
@@ -83,6 +101,7 @@ DominoJS.init = function () {
         for (var i = 0; i < DominoJS.Modules.length; i++) {
             DominoJS.LoadModule(DominoJS.Modules[i]);
         }
+
         setTimeout(DominoJS.hideSign = function () {
             document.getElementById("throbber").style.display = "none";
         }, DominoJS.LATENCY);

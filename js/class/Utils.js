@@ -4,18 +4,31 @@
  * Time: 14:03
  */
 
+function getMousePos(evt) {
+    if (evt.pageX || evt.pageY) {
+        return {
+            x: parseInt(evt.pageX),
+            y: parseInt(evt.pageY)
+        };
+    }
+    return {
+        x: parseInt(evt.clientX) + parseInt(document.body.scrollLeft) - parseInt(document.body.clientLeft),
+        y: parseInt(evt.clientY) + parseInt(document.body.scrollTop) - parseInt(document.body.clientTop)
+    };
+}
+
 function isIE() {
     return (navigator.userAgent.indexOf("MSIE") > -1);
 }
 
-function switchClass(evt, classname, elementname) {
-    if (!evt) evt = window.event;
+function switchClass(event, classname, elementname) {
+    if (!event) event = window.event;
+    var target = {};
     try {
-        var tgt;
-        if (elementname) tgt = DOM.getEventTarget(evt, elementname);
-        else tgt = DOM.getEventTarget(evt);
-        if (tgt != null) tgt.className = classname;
+        if (elementname) target = DOM.getEventTarget(event, elementname);
+        else target = DOM.getEventTarget(event);
+        if (target != null) target.className = classname;
     } catch (e) {
-        alert("switchClass: " + e.message + "\n" + evt.type + "\n" + tgt);
+        alert("switchClass: " + e.message + "\n" + event.type + "\n" + target);
     }
 }
