@@ -8,6 +8,31 @@ function Univers() {
     this.elements = [];
 }
 
+Univers.prototype.createElement = function(elementType) {
+    var element;
+
+    switch(elementType) {
+        case ELEMENT.DOMINO : {
+            element = new Domino();
+        }
+            break;
+        case ELEMENT.SPHERE : {
+            element = new Sphere();
+        }
+            break;
+        default : return;
+            break;
+    }
+
+    element.id = this.generateElementId();
+    element.type = elementType;
+
+    var objects3D = DominoJS.editor.createElement(element);
+    element.geometry3D = objects3D[0];
+    element.object3D = objects3D[1];
+    this.addElement(element)
+};
+
 Univers.prototype.addElement = function (element) {
     if (!this.elements[element.id]) {
         this.elements[element.id] = element;

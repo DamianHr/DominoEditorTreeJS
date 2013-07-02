@@ -88,18 +88,21 @@ var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
 var wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, transparent: true });
 var multiMaterial = [ elementMaterial, wireframeMaterial ];
 
-Editor.prototype.createElement = function (element) {
-    var geometry;
-    switch (element.type) {
+Editor.prototype.createElement = function (universElement) {
+    var geometry, object3D;
+    switch (universElement.type) {
         case ELEMENT.DOMINO : //x, y, z
-            geometry = new THREE.CubeGeometry(element.x, element.y, element.x, 2, 2, 2);
+            geometry = new THREE.CubeGeometry(universElement.dimension._x, universElement.dimension._y, universElement.dimension._z, 2, 2, 2);
+            object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
+            object3D.position.set(universElement.position._x, geometry.height / 2 + universElement.position._y + 1, universElement.position._z);
             break;
         case ELEMENT.SPHERE :
-            geometry = new THREE.SphereGeometry(element.radius, 40, 40);
+            geometry = new THREE.SphereGeometry(universElement.radius, 80, 80);
+            object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
+            object3D.position.set(universElement.position._x, geometry.radius + universElement.position._y + 1, universElement.position._z);
             break;
     }
 
-    var object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
-    object3D.position.set(element.position.x, geometry.height / 2 + element.position.y, element.position.z);
     scene.add(object3D);
+    return [geometry, object3D];
 };

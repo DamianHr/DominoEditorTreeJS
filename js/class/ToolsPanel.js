@@ -8,17 +8,17 @@ ToolsPanel.temp_var = {};
 
 function ToolsPanel() {
 
-    ToolsPanel.panel = DOM.createElement("DIV", "toolspanel");
+    ToolsPanel.panel = DOM.createElement("DIV", "toolspanel", null);
     ToolsPanel.panel.className = "toolspanel";
     DominoJS.editor.element.appendChild(ToolsPanel.panel);
 }
 
 ToolsPanel.prototype.addTool = function (type, imagePath) {
-    var toolDiv = DOM.createElement("DIV", "tool" + type.name);
+    var toolDiv = DOM.createElement("DIV", "tool" + type.name, null);
     toolDiv.className = "panelTool";
 
     DOM.hookEvent(toolDiv, "click", function () {
-        Editor.prototype.createElement(type);
+        DominoJS.univers.createElement(type);
     });
 
     if (imagePath) {
@@ -45,7 +45,7 @@ ToolsPanel.prototype.addTool = function (type, imagePath) {
 
 ToolsPanel.prototype.activate = function (event) {
     if (!event) event = window.event;
-    var object = DOM.getEventTarget(event);
+    var object = DOM.getEventTarget(event, null);
     if (null == object) return false;
 
     var objectId = object.getAttribute("id");

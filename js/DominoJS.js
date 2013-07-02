@@ -79,7 +79,6 @@ DominoJS.showLoadingSign = function (scriptname) {
     else {
         div.childNodes[0].innerHTML = "Loading " + scriptname + "...";
     }
-
     if (div.style.display != "block") div.style.display = "block";
 };
 

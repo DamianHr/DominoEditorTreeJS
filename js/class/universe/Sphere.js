@@ -1,5 +1,5 @@
 function Sphere() {
-    Sphere.apply(this);
+    Element3D.apply(this);
 
     this.radius = 20;
 }

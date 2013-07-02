@@ -7,6 +7,9 @@ function Element3D() {
     this.id = "noID";
     this.position = new Coordinates3D(0, 0, 0);
 
+    this.object3D;
+    this.geometry3D;
+
     this.propertyListener = [];
 }
 
