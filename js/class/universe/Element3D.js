@@ -20,6 +20,10 @@ Element3D.prototype.firePropertyChange = function (property, value) {
     }
 };
 
+Element3D.prototype.propertyChange = function (firer, property, value) {
+
+};
+
 Element3D.addToArray = function (array, obj) {
     var n = array.length;
     for (var i = 0; i < n; i++) if (obj == array[i]) return;
