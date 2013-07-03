@@ -7,7 +7,7 @@
 function NumberInput() {
 }
 
-NumberInput.prototype.createControl = function (name, width, value, onChangeHandler, min, max) {
+NumberInput.prototype.createControl = function (name, groupName, width, value, onChangeHandler, min, max) {
 
     var container = DOM.createElement("DIV", "NumberInput", null);
 

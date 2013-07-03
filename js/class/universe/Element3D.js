@@ -1,10 +1,11 @@
 var ELEMENT = {
-    SPHERE: {value: 0, name: "sphere", code: "s"},
-    DOMINO: {value: 1, name: "domino", code: "d"}
+    SPHERE: {value: 0, name: "Sphere", code: "s"},
+    DOMINO: {value: 1, name: "Domino", code: "d"}
 };
 
 function Element3D() {
     this.id = "noID";
+    this.displayedName = "Element3D";
     this.position = new Coordinates3D(0, 0, 0);
 
     this.object3D;

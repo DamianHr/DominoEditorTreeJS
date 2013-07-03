@@ -19,6 +19,7 @@ ToolsPanel.prototype.addTool = function (type, imagePath) {
 
     DOM.hookEvent(toolDiv, "click", function () {
         DominoJS.univers.createElement(type);
+
     });
 
     if (imagePath) {

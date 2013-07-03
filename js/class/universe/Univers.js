@@ -25,12 +25,14 @@ Univers.prototype.createElement = function(elementType) {
     }
 
     element.id = this.generateElementId();
+    element.displayedName = this.generateElementRealName(elementType);
     element.type = elementType;
 
     var objects3D = DominoJS.editor.createElement(element);
     element.geometry3D = objects3D[0];
     element.object3D = objects3D[1];
-    this.addElement(element)
+    this.addElement(element);
+    DominoJS.listing.update();
 };
 
 Univers.prototype.addElement = function (element) {
@@ -51,6 +53,18 @@ Univers.prototype.getElement = function (id) {
     return null;
 };
 
+Univers.prototype.select = function(event) {
+    var firer = DOM.getEventTarget(event, 'listingElement');
+    if(!firer) return true;
+    DominoJS.temp_var.activated = firer;
+    
+    return false;
+};
+
+Univers.prototype.deselect = function() {
+    DominoJS.temp_var.selected = null;
+};
+
 Univers.prototype.generateElementId = function () {
     var id = 'ID' + (new Date()).getTime();
     for (var i = 0; i < this.elements.length; i++) {
@@ -58,4 +72,11 @@ Univers.prototype.generateElementId = function () {
             setTimeout(this.generateElementId(), 500);
     }
     return id;
+};
+
+Univers.generateElementRealName = function (type) {
+    var index = 0;
+    for(var object in this.elements)
+        if(type === object.type) ++index;
+    return type.name+index;
 };

@@ -7,6 +7,7 @@
 function Properties() {
 
     var titleDiv, row, cell;
+    this.groups = [];
 
     //this.element = DOM.createElement("DIV", "propertypageDiv");
     //this.element.className = "propertypage";
@@ -16,10 +17,12 @@ function Properties() {
     titleDiv.className = "propertypageTitle leftTitle";
     titleDiv.innerHTML = "Properties";
     this.element.appendChild(titleDiv);
-
+/*
     this.table = DOM.createElement("table", "propertypage", null);
     this.table.className = "propertypage";
     this.element.appendChild(this.table);
+*/
+
 
     // positon fields
     for (var i = 0; i < 3; i++) {
@@ -53,26 +56,31 @@ Properties.prototype.propertyChange = function (firer, action, value) {
         this.table.setAttribute("id", firer.id);
 
         var className = DominoJS.getClassName(firer)
+        var group;
         switch (className) {
             case "Domino" :
-                this.update('X', firer.position.x, this.numberInput.createControl('X', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Y', firer.position.x, this.numberInput.createControl('Y', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Z', firer.position.x, this.numberInput.createControl('Z', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('rX', firer.position.x, this.numberInput.createControl('rX', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('rY', firer.position.x, this.numberInput.createControl('rY', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('rZ', firer.position.x, this.numberInput.createControl('rZ', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Width', firer.position.x, this.numberInput.createControl('Width', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Length', firer.position.x, this.numberInput.createControl('Length', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Depth', firer.position.x, this.numberInput.createControl('Depth', firer.position.x, Properties.prototype.onChangeHandler));
+                group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
+                this.update('X', firer.position._x, group, this.numberInput.createControl('X', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('Y', firer.position._y, group, this.numberInput.createControl('Y', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('Z', firer.position._z, group, this.numberInput.createControl('Z', firer.position.x, Properties.prototype.onChangeHandler));
+                group = this.createPropertiesGroup('Rotation', 'propertiesGroup', 'propertiesRotation');
+                this.update('rX', firer.rotation._x, group, this.numberInput.createControl('rX', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('rY', firer.rotation._y, group, this.numberInput.createControl('rY', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('rZ', firer.rotation._z, group, this.numberInput.createControl('rZ', firer.position.x, Properties.prototype.onChangeHandler));
+                group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
+                this.update('Width',  firer.position.x, group, this.numberInput.createControl('Width',  firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('Length', firer.position.x, group, this.numberInput.createControl('Length', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('Depth',  firer.position.x, group, this.numberInput.createControl('Depth',  firer.position.x, Properties.prototype.onChangeHandler));
                 break;
             case "Sphere" :
-                this.update('X', firer.position.x, this.numberInput.createControl('X', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Y', firer.position.x, this.numberInput.createControl('Y', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Z', firer.position.x, this.numberInput.createControl('Z', firer.position.x, Properties.prototype.onChangeHandler));
-                this.update('Radius', firer.position.x, this.numberInput.createControl('Depth', firer.position.x, Properties.prototype.onChangeHandler));
+                group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
+                this.update('X', firer.position.x, group, this.numberInput.createControl('X', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('Y', firer.position.x, group, this.numberInput.createControl('Y', firer.position.x, Properties.prototype.onChangeHandler));
+                this.update('Z', firer.position.x, group, this.numberInput.createControl('Z', firer.position.x, Properties.prototype.onChangeHandler));
+                group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
+                this.update('Radius', firer.position.x, group, this.numberInput.createControl('Radius', firer.position.x, Properties.prototype.onChangeHandler));
                 break;
             default:
-                return;
                 break;
         }
     } else if (action == "deselect" || action == "delete") {
@@ -86,12 +94,29 @@ Properties.prototype.propertyChange = function (firer, action, value) {
 };
 
 /**
+ * Create a node to contain a group of Properties inputs
+ * @param name
+ * @param className
+ * @param id
+ * @returns {*}
+ */
+Properties.prototype.createPropertiesGroup = function(name, className, id) {
+    var element = DOM.createElement("DIV", className, null);
+    element.className = className;
+    element.id = id;
+    element.appendChild(document.createTextNode(name));
+    this.groups[id] = element;
+    return element;
+}
+
+/**
  * Update the elements of the 'propertypage' element
  * @param action
  * @param value
+ * @param group
  * @param options
  */
-Properties.prototype.update = function (action, value, options) {
+Properties.prototype.update = function (action, value, group, options) {
     var rows = this.table.rows;
     var n = rows.length;
     if (value != "0" && !value) value = "none";
@@ -148,6 +173,7 @@ Properties.prototype.clear = function () {
  * Force the update of properties if and only if it exists in the Properties sheet.
  */
 Properties.prototype.forceUpdate = function (property, value) {
+    // get each table for every group
     var rows = this.table.rows;
     var n = rows.length;
     if (value != "0" && !value) value = "none";
