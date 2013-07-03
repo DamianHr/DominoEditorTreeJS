@@ -1,8 +1,13 @@
 function DominoJS() {
+    // TODO: link les boutons des properties
+    // link les boutons delete
+    // créer les fenetres de saisies des options
+    // faire la persistence dans les deux sens
 }
 
 //global variables
 DominoJS._modules = {};
+DominoJS.temp_var = {};
 
 //global functions
 DominoJS.donothing = function () {

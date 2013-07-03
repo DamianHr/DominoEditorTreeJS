@@ -11,29 +11,12 @@ function Element3D() {
     this.object3D;
     this.geometry3D;
 
-    this.propertyListener = [];
 }
-
-Element3D.prototype.firePropertyChange = function (property, value) {
-    var n = this.propertyListener.length;
-    for (var i = 0; i < n; i++) {
-        this.propertyListener[i].propertyChange(this, property, value);
-    }
-};
-
-Element3D.prototype.propertyChange = function (firer, property, value) {
-
-};
 
 Element3D.addToArray = function (array, obj) {
     var n = array.length;
     for (var i = 0; i < n; i++) if (obj == array[i]) return;
     array.push(obj);
-};
-
-Element3D.prototype.addPropertyChangeListener = function (callback) {
-    //this.propertyListener.push(callback);
-    Element3D.addToArray(this.propertyListener, callback);		// prevent repetition
 };
 
 // Persistance functions
@@ -43,7 +26,6 @@ Element3D.prototype.save = function () {
     object.position = this.position.save();
     return object;
 };
-
 
 Element3D.prototype.load = function (object) {
     this.id = object.id;

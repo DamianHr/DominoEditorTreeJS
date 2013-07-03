@@ -8,19 +8,22 @@ function Univers() {
     this.elements = [];
 }
 
-Univers.prototype.createElement = function(elementType) {
+Univers.prototype.createElement = function (elementType) {
     var element;
 
-    switch(elementType) {
-        case ELEMENT.DOMINO : {
+    switch (elementType) {
+        case ELEMENT.DOMINO :
+        {
             element = new Domino();
         }
             break;
-        case ELEMENT.SPHERE : {
+        case ELEMENT.SPHERE :
+        {
             element = new Sphere();
         }
             break;
-        default : return;
+        default :
+            return;
             break;
     }
 
@@ -33,6 +36,7 @@ Univers.prototype.createElement = function(elementType) {
     element.object3D = objects3D[1];
     this.addElement(element);
     DominoJS.listing.update();
+    return element;
 };
 
 Univers.prototype.addElement = function (element) {
@@ -53,15 +57,23 @@ Univers.prototype.getElement = function (id) {
     return null;
 };
 
-Univers.prototype.select = function(event) {
+Univers.prototype.select = function (event) {
     var firer = DOM.getEventTarget(event, 'listingElement');
-    if(!firer) return true;
+    if (!firer) return true;
+
     DominoJS.temp_var.activated = firer;
-    
+
+    for (var objectId in this.elements) {
+        if (objectId === firer.id) {
+            var object = this.elements[objectId];
+            object.firePropertyChange('select', null);
+            break;
+        }
+    }
     return false;
 };
 
-Univers.prototype.deselect = function() {
+Univers.prototype.deselect = function () {
     DominoJS.temp_var.selected = null;
 };
 
@@ -74,9 +86,9 @@ Univers.prototype.generateElementId = function () {
     return id;
 };
 
-Univers.generateElementRealName = function (type) {
+Univers.prototype.generateElementRealName = function (type) {
     var index = 0;
-    for(var object in this.elements)
-        if(type === object.type) ++index;
-    return type.name+index;
+    for (var object in this.elements)
+        if (type === this.elements[object].type) ++index;
+    return type.name + ' ' + index;
 };

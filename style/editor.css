@@ -112,7 +112,13 @@ html, body, .colmask {
     background: #3C3F41;
 }
 
-.propertypage {
+.leftTitle {
+    margin: 2px 0;
+    background-color: #2B2B2B;
+    text-align: center;
+}
+
+.propertypageContainer {
     border: none;
     text-align: center;
     width: 250px;
@@ -120,9 +126,52 @@ html, body, .colmask {
     padding: 0;
 }
 
-.leftTitle {
-    background-color: #2B2B2B;
-    text-align: center;
+.propertyLine {
+    height: 25px;
+    width: 75px;
+    display: inline-block;
+}
+
+.propertyDesc {
+    display: inline-block;
+    width: 15px;
+    height: 25px;
+}
+
+.propertyLine > div {
+    display: inline-block;
+}
+
+.propertyLine .inputContainer {
+    float: left;
+}
+
+.propertyLine .inputContainer input {
+    float: left;
+    width: 20px;
+}
+
+.propertyLine .inputButton {
+    width: 12px;
+    height: 9px;
+    background: #DDD;
+    margin: 0;
+}
+
+.propertyLine .inputButton img {
+    display: none;
+}
+
+.listingElement {
+    margin-bottom: 1px;
+    padding-left: 10px;
+    height: 20px;
+    background: #444444;
+}
+
+.listingElement img {
+    float: right;
+    margin-right: 15px;
 }
 
 .footer {

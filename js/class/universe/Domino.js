@@ -5,4 +5,8 @@ function Domino() {
     this.rotation = new Coordinates3D(0, 0, 0);
 }
 
+Domino.prototype.firePropertyChange = function (action, value) {
+
+};
+
 DominoJS.copyPrototype(Domino, Element3D);
