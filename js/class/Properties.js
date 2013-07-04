@@ -49,25 +49,25 @@ Properties.prototype.propertyChange = function (firer, action) {
         switch (className) {
             case "Domino" :
                 group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
-                this.update('X', firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler));
-                this.update('Y', firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler));
-                this.update('Z', firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler));
+                this.update(firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
+                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', -9999, 9999));
+                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', 0, 9999));
                 group = this.createPropertiesGroup('Rotation', 'propertiesGroup', 'propertiesRotation');
-                this.update('rX', firer.rotation._x, group.id, this.numberInput.createControl('rX', 20, firer.rotation._x, Properties.prototype.onChangeHandler));
-                this.update('rY', firer.rotation._y, group.id, this.numberInput.createControl('rY', 20, firer.rotation._y, Properties.prototype.onChangeHandler));
-                this.update('rZ', firer.rotation._z, group.id, this.numberInput.createControl('rZ', 20, firer.rotation._z, Properties.prototype.onChangeHandler));
+                this.update(firer.rotation._x, group.id, this.numberInput.createControl('rX', 20, firer.rotation._x, Properties.prototype.onChangeHandler, 'Rotation around the X axis for the object.', -359, 359));
+                this.update(firer.rotation._y, group.id, this.numberInput.createControl('rY', 20, firer.rotation._y, Properties.prototype.onChangeHandler, 'Rotation around the Y axis for the object.', -359, 359));
+                this.update(firer.rotation._z, group.id, this.numberInput.createControl('rZ', 20, firer.rotation._z, Properties.prototype.onChangeHandler, 'Rotation around the Z axis for the object.', -359, 359));
                 group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
-                this.update('Width', firer.dimension._x, group.id, this.numberInput.createControl('Width', 20, firer.dimension._x, Properties.prototype.onChangeHandler));
-                this.update('Length', firer.dimension._y, group.id, this.numberInput.createControl('Length', 20, firer.dimension._y, Properties.prototype.onChangeHandler));
-                this.update('Depth', firer.dimension._z, group.id, this.numberInput.createControl('Depth', 20, firer.dimension._z, Properties.prototype.onChangeHandler));
+                this.update(firer.dimension._x, group.id, this.numberInput.createControl('W', 20, firer.dimension._x, Properties.prototype.onChangeHandler, 'Dimension on the X axis for the object.', 1, 500));
+                this.update(firer.dimension._y, group.id, this.numberInput.createControl('L', 20, firer.dimension._y, Properties.prototype.onChangeHandler, 'Dimension on the Y axis for the object.', 1, 500));
+                this.update(firer.dimension._z, group.id, this.numberInput.createControl('D', 20, firer.dimension._z, Properties.prototype.onChangeHandler, 'Dimension on the Z axis for the object.', 1, 500));
                 break;
             case "Sphere" :
                 group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
-                this.update('X', firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler));
-                this.update('Y', firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler));
-                this.update('Z', firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler));
+                this.update(firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
+                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', -9999, 9999));
+                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', 0, 9999));
                 group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
-                this.update('Radius', firer.radius, group.id, this.numberInput.createControl('Radius', 20, firer.radius, Properties.prototype.onChangeHandler));
+                this.update(firer.radius, group.id, this.numberInput.createControl('R', 20, firer.radius, Properties.prototype.onChangeHandler, 'Radius of the object.', 2, 500));
                 break;
             default:
                 break;
@@ -99,21 +99,15 @@ Properties.prototype.createPropertiesGroup = function (name, className, id) {
 
 /**
  * Update the elements of the 'propertypage' element
- * @param propertyName
  * @param value
  * @param groupId
  * @param input
  */
-Properties.prototype.update = function (propertyName, value, groupId, input) {
+Properties.prototype.update = function (value, groupId, input) {
     var group = this.groups[groupId];
 
     var propertyLine = DOM.createElement('DIV', 'propertyLine', null);
     propertyLine.className = 'propertyLine';
-
-    var propertyDesc = DOM.createElement('SPAN', null, null);
-    propertyDesc.className = 'propertyDesc';
-    propertyDesc.innerHTML = propertyName;
-    propertyLine.appendChild(propertyDesc);
 
     propertyLine.appendChild(input);
 

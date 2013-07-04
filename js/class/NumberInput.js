@@ -7,28 +7,35 @@
 function NumberInput() {
 }
 
-NumberInput.prototype.createControl = function (name, width, value, onChangeHandler, min, max) {
+NumberInput.prototype.createControl = function (name, width, value, onChangeHandler, title, min, max) {
 
     var container = DOM.createElement("DIV", "NumberInput", null);
     container.className = 'inputControl';
+
+    var descDiv = DOM.createElement("DIV", "inputDescription", null);
+    descDiv.className = "propertyDesc";
+    descDiv.innerHTML = name + ' :';
+    container.appendChild(descDiv);
 
     var first = document.createElement("DIV");
     container.appendChild(first);
     first.style.cssFloat = "left";
     first.style.styleFloat = "left";
     first.className = 'inputContainer';
+    first.title = title;
 
     var input = DOM.createElement("INPUT", "NumberInput", "text");
     input.id = name;
     input.setAttribute("maxlength", width);
     input.setAttribute("min", min ? min : '0');
     input.setAttribute("max", max ? max : 'unbounded');
+
     var v = parseInt(value);
     input.value = isNaN(v) ? 0 : v;
     if (onChangeHandler) {
         input.onChangeHandler = onChangeHandler;
         input.onchange = function (event) {
-            var obj = DOM.getEventTarget(event);
+            var obj = DOM.getEventTarget(event, null);
             obj.onChangeHandler(obj, obj.id, obj.value);
         }
     }
@@ -36,22 +43,19 @@ NumberInput.prototype.createControl = function (name, width, value, onChangeHand
 
     var buttons = document.createElement("DIV");
     container.appendChild(buttons);
-    buttons.style.cssFloat = "left";
-    buttons.style.styleFloat = "left";
 
     var numberBtnUp = DOM.createElement("DIV", "button", null);
     numberBtnUp.className = 'inputButton';
     var image = document.createElement("IMG");
-    image.src = "img/up.gif";
+    image.src = "img/up.png";
     numberBtnUp.appendChild(image);
     //NumberInput.buttonStyle(numberBtnUp);
 
     var numberBtnDown = DOM.createElement("DIV", "button", null);
     numberBtnDown.className = 'inputButton';
     image = document.createElement("IMG");
-    image.src = "img/down.gif";
+    image.src = "img/down.png";
     numberBtnDown.appendChild(image);
-    //NumberInput.buttonStyle(numberBtnDown);
 
     buttons.appendChild(numberBtnUp);
     buttons.appendChild(numberBtnDown);
@@ -108,10 +112,10 @@ NumberInput.unpress = function (event) {
 
 NumberInput.numberUp = function (event) {
     var container = DOM.getEventTarget(event, 'NumberInput');
-    var input = container.firstChild.firstChild;
+    var input = container.childNodes[1].firstChild;
     var max = parseInt(input.getAttribute("max"));
     var value = parseInt(input.value);
-    if (isNaN(value)) input.value = 1;
+    if (isNaN(value)) input.value = 0;
     else {
         if (!isNaN(max)) input.value = value >= max ? max : ++value;
         else input.value = ++value;
@@ -121,10 +125,10 @@ NumberInput.numberUp = function (event) {
 
 NumberInput.numberDown = function (event) {
     var container = DOM.getEventTarget(event, 'NumberInput');
-    var input = container.firstChild.firstChild;
+    var input = container.childNodes[1].firstChild;
     var min = parseInt(input.getAttribute("min"));
     var value = parseInt(input.value);
-    if (isNaN(value)) input.value = 1;
+    if (isNaN(value)) input.value = 0;
     else {
         if (isNaN(min)) min = 0;
         input.value = value <= min ? min : --value;

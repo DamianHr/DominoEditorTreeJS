@@ -36,7 +36,7 @@
     top: 0;
     width: 15px;
     cursor: pointer;
-    background: #ccc url(../img/scroll-arrows.gif) no-repeat 50% 50%;
+    /*background: #ccc url(../img/scroll-arrows.gif) no-repeat 50% 50%;*/
 }
 
 .buttonclick {

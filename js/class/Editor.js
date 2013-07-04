@@ -50,16 +50,18 @@ function Editor() {
     // FLOOR
     var floorTexture = new THREE.ImageUtils.loadTexture('img/checkerboard.jpg');
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-    floorTexture.repeat.set(8, 8);
+    floorTexture.repeat.set(10, 10);
+
     var floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.DoubleSide });
-    var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+    //floorMaterial.color.setHex(0x68B5FF);
+    var floorGeometry = new THREE.PlaneGeometry(2000, 2000, 10, 10);
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.position.y = 0;
     floor.rotation.x = Math.PI / 2;
     scene.add(floor);
 
     // SKYBOX
-    var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
+    var skyBoxGeometry = new THREE.CubeGeometry(15000, 15000, 15000);
     var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0xC0C0C0, side: THREE.BackSide });
     var skyBox = new THREE.Mesh(skyBoxGeometry, skyBoxMaterial);
     scene.add(skyBox);

@@ -46,19 +46,10 @@ html, body, .colmask {
 .header .headerButton {
     padding: 5px 15px;
     cursor: pointer;
-    /*background: -moz-linear-gradient(
-        top,
-        #7a7a7a 0%,
-        #393c3e);
-    background: -webkit-gradient(
-        linear, left top, left bottom,
-        from(#7a7a7a),
-        to(#393c3e));*/
     background: #393c3e;
     -moz-border-radius: 30px;
     -webkit-border-radius: 30px;
     border-radius: 30px;
-    /*border: 1px solid #363636;*/
     -moz-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
     -webkit-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
     box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
@@ -66,7 +57,7 @@ html, body, .colmask {
 }
 
 .header .headerButton:hover {
-    background: #7a7a7a;
+    background: #4c4c4c;
 }
 
 .colmid {
@@ -86,7 +77,7 @@ html, body, .colmask {
 .toolspanel div {
     width: 70px;
     height: 70px;
-    background: #7A7A7A;
+    background: #393C3E;
     border: 1px solid #242627;
     border-radius: 10px;
     margin: 0 5px;
@@ -94,7 +85,7 @@ html, body, .colmask {
 }
 
 .toolspanel div:hover {
-    background: #393C3E;
+    background: #4c4c4c;
 }
 
 .toolspanel img {
@@ -112,34 +103,52 @@ html, body, .colmask {
     background: #3C3F41;
 }
 
+.colright .listingTitle:first-child+.listingTitle {
+    margin-bottom: 5px;
+}
+
 .leftTitle {
-    margin: 2px 0;
+    height: 20px;
+    margin: 2px 0 4px 0;
+    padding: 5px 0 0 0;
     background-color: #2B2B2B;
     text-align: center;
 }
 
-.propertypageContainer {
+.propertiesContainer {
     border: none;
-    text-align: center;
-    width: 250px;
-    min-height: 100px;
+    height: 200px;
     padding: 0;
+}
+
+.groupName {
+    padding: 2px 0 0 5px;
+    height: 20px;
+    background: #444;
 }
 
 .propertyLine {
     height: 25px;
-    width: 75px;
     display: inline-block;
+    margin: 10px 0;
+    vertical-align: top;
 }
 
 .propertyDesc {
-    display: inline-block;
-    width: 15px;
-    height: 25px;
+    width: 19px;
+    padding-top: 4px;
 }
 
 .propertyLine > div {
     display: inline-block;
+}
+
+.inputControl {
+    margin: 0 0 0 8px;
+}
+
+.inputControl div {
+    float: left;
 }
 
 .propertyLine .inputContainer {
@@ -148,18 +157,45 @@ html, body, .colmask {
 
 .propertyLine .inputContainer input {
     float: left;
-    width: 20px;
+    width: 36px;
+    background: #3C3F41;
+    border: none;
+    color: #A1A1A0;
+    text-align: right;
+    border-bottom: 1px solid #7A7A7A;
+    border-left: 1px solid #7A7A7A;
 }
 
 .propertyLine .inputButton {
-    width: 12px;
-    height: 9px;
-    background: #DDD;
+    float: none;
+    width: 16px;
+    height: 7.5px;
+    background: #444;
     margin: 0;
+    padding-top: 3px;
+}
+
+.propertyLine .inputButton:hover {
+    background: #717171;
+}
+
+.propertyLine .inputButton:first-child {
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+}
+
+.propertyLine .inputButton:first-child+div {
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .propertyLine .inputButton img {
-    display: none;
+    display: block;
+    margin: 0 auto;
+    height: 4px;
+    width: 7px;
 }
 
 .listingElement {
@@ -167,6 +203,11 @@ html, body, .colmask {
     padding-left: 10px;
     height: 20px;
     background: #444444;
+    cursor: default;
+}
+
+.listingElement:hover {
+    background: #717171;
 }
 
 .listingElement img {
