@@ -39,7 +39,7 @@ function Properties() {
  * @param action
  */
 Properties.prototype.propertyChange = function (firer, action) {
-    this.clear();
+    this.clearNodes();
 
     if ("select" == action) {
         //this.table.setAttribute("id", firer.id);
@@ -50,12 +50,12 @@ Properties.prototype.propertyChange = function (firer, action) {
             case "Domino" :
                 group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
                 this.update(firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
-                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', -9999, 9999));
-                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', 0, 9999));
+                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', 0, 9999));
+                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', -9999, 9999));
                 group = this.createPropertiesGroup('Rotation', 'propertiesGroup', 'propertiesRotation');
-                this.update(firer.rotation._x, group.id, this.numberInput.createControl('rX', 20, firer.rotation._x, Properties.prototype.onChangeHandler, 'Rotation around the X axis for the object.', -359, 359));
-                this.update(firer.rotation._y, group.id, this.numberInput.createControl('rY', 20, firer.rotation._y, Properties.prototype.onChangeHandler, 'Rotation around the Y axis for the object.', -359, 359));
-                this.update(firer.rotation._z, group.id, this.numberInput.createControl('rZ', 20, firer.rotation._z, Properties.prototype.onChangeHandler, 'Rotation around the Z axis for the object.', -359, 359));
+                this.update(firer.rotation._x, group.id, this.numberInput.createControl('rX', 20, firer.rotation._x, Properties.prototype.onChangeHandler, 'Rotation around the X axis for the object.', -50, 50));
+                this.update(firer.rotation._y, group.id, this.numberInput.createControl('rY', 20, firer.rotation._y, Properties.prototype.onChangeHandler, 'Rotation around the Y axis for the object.', -50, 50));
+                this.update(firer.rotation._z, group.id, this.numberInput.createControl('rZ', 20, firer.rotation._z, Properties.prototype.onChangeHandler, 'Rotation around the Z axis for the object.', -50, 50));
                 group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
                 this.update(firer.dimension._x, group.id, this.numberInput.createControl('W', 20, firer.dimension._x, Properties.prototype.onChangeHandler, 'Dimension on the X axis for the object.', 1, 500));
                 this.update(firer.dimension._y, group.id, this.numberInput.createControl('L', 20, firer.dimension._y, Properties.prototype.onChangeHandler, 'Dimension on the Y axis for the object.', 1, 500));
@@ -64,8 +64,8 @@ Properties.prototype.propertyChange = function (firer, action) {
             case "Sphere" :
                 group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
                 this.update(firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
-                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', -9999, 9999));
-                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', 0, 9999));
+                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', 0, 9999));
+                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', -9999, 9999));
                 group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
                 this.update(firer.radius, group.id, this.numberInput.createControl('R', 20, firer.radius, Properties.prototype.onChangeHandler, 'Radius of the object.', 2, 500));
                 break;
@@ -117,7 +117,7 @@ Properties.prototype.update = function (value, groupId, input) {
 /**
  * Clear the table of Properties
  */
-Properties.prototype.clear = function () {
+Properties.prototype.clearNodes = function () {
     while (this.containerDiv.firstChild) this.containerDiv.removeChild(this.containerDiv.firstChild);
 };
 
@@ -145,9 +145,9 @@ Properties.prototype.createCheckBox = function (name) {
  * @param value
  */
 Properties.prototype.onChangeHandler = function (object, property, value) {
-    var table = DOM.bubbleToTarget(object, "propertypage");
-    var element = DominoJS.univers.getElement(table.id);
-    if (element) element.setProperty(property, value);
+    value = parseInt(value);
+    var element = DominoJS.temp_var.activated;
+    if (element) element.setProperties(property, value);
 };
 
 /**

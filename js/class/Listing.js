@@ -9,7 +9,6 @@ function Listing() {
     var titleDiv;
     this.containerDiv = {};
     this.elements = [];
-    this.active = {};
 
     //this.element = DOM.createElement("DIV", "listingDiv");
     //this.element.className = "listing";
@@ -44,19 +43,39 @@ Listing.prototype.createListElement = function (displayedName, id) {
     suppressButton.className = 'miniIcon';
     element.appendChild(suppressButton);
 
+    DOM.hookEvent(suppressButton, 'click', function (event) {
+        var element = DOM.getEventTarget(event, 'listingElement');
+        DominoJS.univers.deleteElement(element.id);
+        DominoJS.listing.deleteElement(element);
+        DominoJS.propertypage.clearNodes();
+    });
+
     DOM.hookEvent(element, 'click', function (event) {
         DominoJS.univers.select(event);
-        DominoJS.listing.select(element);
+        DominoJS.listing.select(element.id);
     });
 
     this.elements.push(element);
     this.containerDiv.appendChild(element);
 };
 
+Listing.prototype.deleteElement = function (element) {
+    var index = this.elements.indexOf(element);
+    this.containerDiv.removeChild(this.elements[index]);
+    this.elements.slice(index, 1);
+};
+
 Listing.prototype.clearNodes = function () {
     while (this.containerDiv.firstChild) this.containerDiv.removeChild(this.containerDiv.firstChild);
 };
 
-Listing.prototype.select = function (element) {
+Listing.prototype.select = function (elementId) {
+    if (this.active && elementId == this.active.id) return;
+    // remove previous active css
+    if (this.active) this.active.className = this.active.className.replace(' activeElement', '');
 
+    // add to new active css
+    for (var i in this.elements) if (this.elements[i].id == elementId) this.active = this.elements[i];
+
+    this.active.className += ' activeElement';
 };

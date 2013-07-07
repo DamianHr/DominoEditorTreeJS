@@ -15,13 +15,14 @@ function Header() {
     this.saveButton = DOM.createElement("INPUT", "saveButton", "button");
     this.saveButton.className = "saveButton headerButton";
     this.saveButton.value = "Save";
+    DOM.hookEvent(this.saveButton, "click", function () {
+    });
     this.element.appendChild(this.saveButton);
 
     this.loadButton = DOM.createElement("INPUT", "loadButton", "button");
     this.loadButton.className = "loadButton headerButton";
     this.loadButton.value = "Load";
     DOM.hookEvent(this.loadButton, "click", function () {
-        Editor.prototype.createElement(ELEMENT.DOMINO);
     });
     this.element.appendChild(this.loadButton);
 

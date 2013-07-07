@@ -21,12 +21,16 @@ function isIE() {
     return (navigator.userAgent.indexOf("MSIE") > -1);
 }
 
+function getMouseWheelEventName() {
+    return (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel";
+}
+
 function switchClass(event, classname, elementname) {
     if (!event) event = window.event;
     var target = {};
     try {
         if (elementname) target = DOM.getEventTarget(event, elementname);
-        else target = DOM.getEventTarget(event);
+        else target = DOM.getEventTarget(event, null);
         if (target != null) target.className = classname;
     } catch (e) {
         alert("switchClass: " + e.message + "\n" + event.type + "\n" + target);

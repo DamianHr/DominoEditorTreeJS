@@ -42,10 +42,9 @@ function Editor() {
     stats.domElement.style.zIndex = 100;
     container.appendChild(stats.domElement);
     // LIGHT
-    /*var light = new THREE.PointLight(0xffffff);
-     light.position.set(0, 250, 0);
-     light.castShadow = true;
-     scene.add(light);*/
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(0, 250, 0);
+    scene.add(light);
 
     // FLOOR
     var floorTexture = new THREE.ImageUtils.loadTexture('img/checkerboard.jpg');
@@ -79,9 +78,7 @@ Editor.prototype.update = function () {
     if (keyboard.pressed("z")) {
         // do something
     }
-
     controls.update();
-    //console.log(camera.getPosition);
     stats.update();
 };
 
@@ -90,13 +87,16 @@ var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
 var wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, transparent: true });
 var multiMaterial = [ elementMaterial, wireframeMaterial ];
 
-Editor.prototype.createElement = function (universElement) {
+Editor.prototype.createObject = function (universElement) {
     var geometry, object3D;
     switch (universElement.type) {
         case ELEMENT.DOMINO : //x, y, z
             geometry = new THREE.CubeGeometry(universElement.dimension._x, universElement.dimension._y, universElement.dimension._z, 2, 2, 2);
             object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
             object3D.position.set(universElement.position._x, geometry.height / 2 + universElement.position._y + 1, universElement.position._z);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(1, 0, 0), universElement.rotation._x);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 1, 0), universElement.rotation._y);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 0, 1), universElement.rotation._z);
             break;
         case ELEMENT.SPHERE :
             geometry = new THREE.SphereGeometry(universElement.radius, 80, 80);
@@ -106,5 +106,21 @@ Editor.prototype.createElement = function (universElement) {
     }
 
     scene.add(object3D);
-    return [geometry, object3D];
+    universElement.geometry3D = geometry;
+    universElement.object3D = object3D;
+};
+
+var rotObjectMatrix;
+Editor.prototype.rotateAroundObjectAxis = function (object, axis, radians) {
+    rotObjectMatrix = new THREE.Matrix4;
+    rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
+    object.matrix.multiply(rotObjectMatrix);
+
+    // new code for Three.js r50+
+    object.rotation.setEulerFromRotationMatrix(object.matrix);
+
+};
+
+Editor.prototype.removeObject = function (object) {
+    scene.remove(object);
 };

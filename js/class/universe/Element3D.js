@@ -8,15 +8,29 @@ function Element3D() {
     this.displayedName = "Element3D";
     this.position = new Coordinates3D(0, 0, 0);
 
-    this.object3D;
-    this.geometry3D;
-
+    this.object3D = {};
+    this.geometry3D = {};
 }
 
 Element3D.addToArray = function (array, obj) {
     var n = array.length;
     for (var i = 0; i < n; i++) if (obj == array[i]) return;
     array.push(obj);
+};
+
+Element3D.prototype.setPosition = function (property, value) {
+
+    var done = true;
+    if (property == 'X') this.position._x = value;
+    else if (property == 'Y') this.position._y = value;
+    else if (property == 'Z') this.position._z = value;
+    else done = false;
+
+    if (done === true) {
+        var y = this.type === ELEMENT.DOMINO ? this.dimension._y / 2 + this.position._y + 1 : this.radius + this.position._y + 1;
+        this.object3D.position.set(this.position._x, y, this.position._z);
+    }
+    return done;
 };
 
 // Persistance functions

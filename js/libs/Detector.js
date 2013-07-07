@@ -43,7 +43,6 @@ Detector = {
         }
 
         return element;
-
     },
 
     addGetWebGLMessage: function (parameters) {
@@ -61,5 +60,4 @@ Detector = {
         parent.appendChild(element);
 
     }
-
 };

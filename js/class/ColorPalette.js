@@ -9,7 +9,7 @@ function ColorPalette(colorArray) {
     this.id = "ColorPalette_" + ColorPalette.sequence++;
 
     // we use an iframe which can cover IE controls like select boxes
-    var iframe = DOM.createElement("IFRAME", "sneaky_iframe");
+    var iframe = DOM.createElement("IFRAME", "sneaky_iframe", null);
     iframe.frameBorder = 0;
     iframe.style.position = "absolute";
     iframe.style.border = "1px solid black";
@@ -71,7 +71,7 @@ function ColorPalette(colorArray) {
     row.style.height = ColorPalette.HEIGHT + "px";
     cell = row.insertCell(-1);
     cell.style.width = ColorPalette.WIDTH + "px";
-    cell.innerHTML = '<img src="./img/nothing.gif"/>';
+    cell.innerHTML = '<img src="../../img/nothing.gif"/>';
     cell.style.backgroundImage = "url(./img/nocolor.gif)";
     cell.style.border = "1px solid black";
 
@@ -118,7 +118,7 @@ ColorPalette.WIDTH = 10;
 ColorPalette.HEIGHT = 14;
 
 ColorPalette.prototype.createControl = function (name, value, onChangeHandler) {
-    var control = DOM.createElement("DIV", "ColorControl");
+    var control = DOM.createElement("DIV", "ColorControl", null);
     control.setAttribute('id', this.id);
     control.style.border = "1px solid black";
     control.style.padding = "0px";

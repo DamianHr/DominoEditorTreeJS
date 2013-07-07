@@ -193,15 +193,15 @@ html, body, .colmask {
 
 .propertyLine .inputButton img {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 0 4px;
     height: 4px;
     width: 7px;
 }
 
 .listingElement {
     margin-bottom: 1px;
-    padding-left: 10px;
-    height: 20px;
+    padding: 4px 0 0 10px;
+    height: 18px;
     background: #444444;
     cursor: default;
 }
@@ -210,9 +210,23 @@ html, body, .colmask {
     background: #717171;
 }
 
+.activeElement {
+    font-weight: bold;
+}
+
+.activeElement:before {
+    content: '> ';
+}
+
 .listingElement img {
     float: right;
-    margin-right: 15px;
+    margin: 0px 15px 0 0;
+    cursor: pointer;
+}
+
+.listingElement img:hover {
+    height: 17px;
+    width: 17px;
 }
 
 .footer {

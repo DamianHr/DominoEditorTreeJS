@@ -13,17 +13,12 @@ Univers.prototype.createElement = function (elementType) {
 
     switch (elementType) {
         case ELEMENT.DOMINO :
-        {
             element = new Domino();
-        }
             break;
         case ELEMENT.SPHERE :
-        {
             element = new Sphere();
-        }
             break;
         default :
-            return;
             break;
     }
 
@@ -31,11 +26,11 @@ Univers.prototype.createElement = function (elementType) {
     element.displayedName = this.generateElementRealName(elementType);
     element.type = elementType;
 
-    var objects3D = DominoJS.editor.createElement(element);
-    element.geometry3D = objects3D[0];
-    element.object3D = objects3D[1];
+    DominoJS.editor.createObject(element);
     this.addElement(element);
     DominoJS.listing.update();
+    DominoJS.listing.select(element.id);
+
     return element;
 };
 
@@ -47,14 +42,9 @@ Univers.prototype.addElement = function (element) {
     return false;
 };
 
-Univers.prototype.removeElement = function (id) {
-    var idx = this.elements.indexOf(id);
-    if (-1 != idx) this.elements.splice(idx, 1);
-};
-
-Univers.prototype.getElement = function (id) {
-    if (id) return this.elements[id];
-    return null;
+Univers.prototype.deleteElement = function (id) {
+    DominoJS.editor.removeObject(this.elements[id].object3D);
+    delete this.elements[id];
 };
 
 Univers.prototype.select = function (event) {
@@ -66,7 +56,7 @@ Univers.prototype.select = function (event) {
     for (var objectId in this.elements) {
         if (objectId === firer.id) {
             var object = this.elements[objectId];
-            object.firePropertyChange('select', null);
+            DominoJS.propertypage.propertyChange(object, 'select');
             break;
         }
     }

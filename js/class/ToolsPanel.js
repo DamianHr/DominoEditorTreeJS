@@ -20,6 +20,7 @@ ToolsPanel.prototype.addTool = function (type, imagePath) {
     DOM.hookEvent(toolDiv, "click", function () {
         var newElement = DominoJS.univers.createElement(type);
         DominoJS.propertypage.propertyChange(newElement, 'select');
+        DominoJS.temp_var.activated = newElement;
     });
 
     if (imagePath) {
@@ -31,43 +32,6 @@ ToolsPanel.prototype.addTool = function (type, imagePath) {
     else {
         toolDiv.innerHtml = type.name;
     }
-    /*
-     DOM.hookEvent(toolDiv, "mouseover", function (event) {
-     switchClass(event, 'hovering')
-     });
-     DOM.hookEvent(toolDiv, "mouseout", function (event) {
-     switchClass(event, '')
-     });
-     */
-    //toolDiv.onclick = function(event) {return ToolsPanel.prototype.activate(event)};
 
     ToolsPanel.panel.appendChild(toolDiv);
-};
-
-ToolsPanel.prototype.activate = function (event) {
-    if (!event) event = window.event;
-    var object = DOM.getEventTarget(event, null);
-    if (null == object) return false;
-
-    var objectId = object.getAttribute("id");
-    if (DominoJS.temp_var.activated) {
-        if (objectId == DominoJS.temp_var.activated.getAttribute("id")) {
-            ToolsPanel.prototype.deactivate();
-            return false;
-        } else {
-            ToolsPanel.prototype.deactivate();
-        }
-    }
-    DominoJS.temp_var.activated = object;
-    DominoJS.temp_var.activated.className += "activeTool";
-    DominoJS.temp_var.activated.style.border = "2px solid #ff0000";
-    return false;
-};
-
-ToolsPanel.prototype.deactivate = function () {
-    if (DominoJS.temp_var.activated) {
-        DominoJS.temp_var.activated.className.replace("activeTool", "");
-        DominoJS.temp_var.activated.style.border = "none";
-        delete DominoJS.temp_var.activated;
-    }
 };
