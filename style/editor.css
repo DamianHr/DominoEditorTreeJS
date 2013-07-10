@@ -14,6 +14,7 @@ body {
 html, body, .colmask {
     width: 100%;
     height: 100%;
+    position: absolute;
 }
 
 .colmask {
@@ -34,7 +35,7 @@ html, body, .colmask {
     font-size: 12px;
 }
 
-.header .titleInput {
+.header .nameInput {
     width: 300px;
     margin: 0 20px;
     background-color: #393C3E;
@@ -43,20 +44,16 @@ html, body, .colmask {
     border-left: 1px solid #7A7A7A;
 }
 
-.header .headerButton {
+.button {
     padding: 5px 15px;
     cursor: pointer;
     background: #393c3e;
-    -moz-border-radius: 30px;
-    -webkit-border-radius: 30px;
     border-radius: 30px;
-    -moz-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
-    -webkit-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
     box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
     text-shadow: 0px -1px 0px rgba(000, 000, 000, 0.4), 0px 1px 0px rgba(255, 255, 255, 0.3);
 }
 
-.header .headerButton:hover {
+.button:hover {
     background: #4c4c4c;
 }
 
@@ -91,6 +88,8 @@ html, body, .colmask {
 .toolspanel img {
     max-height: 50px;
     max-width: 50px;
+    display: block;
+    margin: 10px auto;
 }
 
 .colright {
@@ -180,14 +179,10 @@ html, body, .colmask {
 }
 
 .propertyLine .inputButton:first-child {
-    -webkit-border-top-right-radius: 6px;
-    -moz-border-radius-topright: 6px;
     border-top-right-radius: 6px;
 }
 
 .propertyLine .inputButton:first-child+div {
-    -webkit-border-bottom-right-radius: 6px;
-    -moz-border-radius-bottomright: 6px;
     border-bottom-right-radius: 6px;
 }
 
@@ -242,4 +237,35 @@ html, body, .colmask {
 .canvas {
     height: 100%;
     width: 100%;
+}
+
+.transparentMask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1A1A1A;
+    opacity: 0.85;
+}
+
+.window {
+    position: relative;
+    top: 20%;
+    margin: 0 auto;
+    height: 500px;
+    width: 600px;
+    background: #3C3F41;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.7);
+}
+
+.window .areaJson {
+    width: 100%;
+    min-height: 475px;
+}
+
+.window .buttonContainer {
+    text-align: right;
 }

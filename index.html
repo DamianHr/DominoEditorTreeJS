@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head lang="en">
-        <title>Domino.JS</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="style/editor.css">
-        <link rel="stylesheet" type="text/css" href="style/extra.css">
-        <link rel="stylesheet" type="text/css" href="style/scroller.css">
-        <script type="text/javascript" src="./js/DominoJS.js"></script>
-        <script type="text/javascript">
-            function initDominoJS() {
-                DominoJS.univers = new Univers();
-                DominoJS.uiBuilder = new UIBuilder();
-            }
-            DominoJS.start(initDominoJS);
-        </script>
-    </head>
-    <body id="body">
-    <div class="colmask">
-        <div class="header" id="header">
-        </div>
-        <div class="colmid" id="colmid">
-        </div>
-        <div class="colright" id="colright">
-        </div>
-        <div class="footer" id="footer">
-            &nbsp;
-        </div>
+<head lang="en">
+    <title>Domino.JS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style/editor.css">
+    <link rel="stylesheet" type="text/css" href="style/extra.css">
+    <link rel="stylesheet" type="text/css" href="style/scroller.css">
+    <script type="text/javascript" src="js/MainController.js"></script>
+    <script type="text/javascript">
+        function initDominoJS() {
+            MainController.univers = new Univers();
+            MainController.uiBuilder = new UIBuilder();
+        }
+        MainController.start(initDominoJS);
+    </script>
+</head>
+<body id="body">
+<div class="colmask">
+    <div class="header" id="header">
     </div>
+    <div class="colmid" id="colmid">
+    </div>
+    <div class="colright" id="colright">
+    </div>
+    <div class="footer" id="footer">
+        &nbsp;
+    </div>
+</div>
 
 
-    </body>
+</body>
 </html>

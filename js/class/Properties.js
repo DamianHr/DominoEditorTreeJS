@@ -4,6 +4,10 @@
  * Time: 23:36
  */
 
+/**
+ *
+ * @constructor
+ */
 function Properties() {
 
     var titleDiv;
@@ -22,14 +26,14 @@ function Properties() {
     this.containerDiv.className = "propertiesContainer";
     this.column.appendChild(this.containerDiv);
 
-
-    var colors = [];
-    colors[0] = new Array("#000000", "#808080", "#800000", "#808000");
-    colors[1] = new Array("#008000", "#008080", "#000080", "#800080");
-    colors[2] = new Array("#c0c0c0", "#ff0000", "#ffff00", "#00ff00");
-    colors[3] = new Array("#00ffff", "#0000ff", "#ff00ff", "#ffffff");
-
-    this.colorPalette = new ColorPalette(colors);
+    /*
+     var colors = [];
+     colors[0] = new Array("#000000", "#808080", "#800000", "#808000");
+     colors[1] = new Array("#008000", "#008080", "#000080", "#800080");
+     colors[2] = new Array("#c0c0c0", "#ff0000", "#ffff00", "#00ff00");
+     colors[3] = new Array("#00ffff", "#0000ff", "#ff00ff", "#ffffff");
+     */
+    //this.colorPalette = new ColorPalette(colors);
     this.numberInput = new NumberInput();
 }
 
@@ -44,7 +48,7 @@ Properties.prototype.propertyChange = function (firer, action) {
     if ("select" == action) {
         //this.table.setAttribute("id", firer.id);
 
-        var className = DominoJS.getClassName(firer)
+        var className = MainController.getClassName(firer)
         var group;
         switch (className) {
             case "Domino" :
@@ -146,7 +150,7 @@ Properties.prototype.createCheckBox = function (name) {
  */
 Properties.prototype.onChangeHandler = function (object, property, value) {
     value = parseInt(value);
-    var element = DominoJS.temp_var.activated;
+    var element = MainController.temp_var.activated;
     if (element) element.setProperties(property, value);
 };
 

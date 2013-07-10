@@ -5,7 +5,12 @@
  */
 var scene, camera, renderer, container, stats, controls;
 var keyboard = new THREEx.KeyboardState();
+var multiMaterial;
 
+/**
+ *
+ * @constructor
+ */
 function Editor() {
 
     this.element = document.getElementById("colmid");
@@ -41,10 +46,9 @@ function Editor() {
     stats.domElement.style.top = '50px';
     stats.domElement.style.zIndex = 100;
     container.appendChild(stats.domElement);
-    // LIGHT
-    var light = new THREE.PointLight(0xffffff);
-    light.position.set(0, 250, 0);
-    scene.add(light);
+
+    // FOG
+    scene.fog = new THREE.FogExp2(0xC0C0C0, 0.00045);
 
     // FLOOR
     var floorTexture = new THREE.ImageUtils.loadTexture('img/checkerboard.jpg');
@@ -53,14 +57,14 @@ function Editor() {
 
     var floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.DoubleSide });
     //floorMaterial.color.setHex(0x68B5FF);
-    var floorGeometry = new THREE.PlaneGeometry(2000, 2000, 10, 10);
+    var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.position.y = 0;
     floor.rotation.x = Math.PI / 2;
     scene.add(floor);
 
     // SKYBOX
-    var skyBoxGeometry = new THREE.CubeGeometry(15000, 15000, 15000);
+    var skyBoxGeometry = new THREE.CubeGeometry(5000, 5000, 5000);
     var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0xC0C0C0, side: THREE.BackSide });
     var skyBox = new THREE.Mesh(skyBoxGeometry, skyBoxMaterial);
     scene.add(skyBox);
@@ -68,12 +72,18 @@ function Editor() {
     this.animate();
 }
 
+/**
+ *
+ */
 Editor.prototype.animate = function () {
     requestAnimationFrame(Editor.prototype.animate);
     renderer.render(scene, camera);
     Editor.prototype.update();
 };
 
+/**
+ *
+ */
 Editor.prototype.update = function () {
     if (keyboard.pressed("z")) {
         // do something
@@ -81,13 +91,24 @@ Editor.prototype.update = function () {
     controls.update();
     stats.update();
 };
+/**
+ *
+ * @returns {Array}
+ */
+Editor.prototype.loadMultiMaterial = function () {
+    var elementTexture = new THREE.ImageUtils.loadTexture('./img/wood.jpg');
+    var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
+    //var elementMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
+    var wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, transparent: true });
+    return [ elementMaterial, wireframeMaterial ];
+}
 
-var elementTexture = new THREE.ImageUtils.loadTexture('./img/crate.gif');
-var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
-var wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, transparent: true });
-var multiMaterial = [ elementMaterial, wireframeMaterial ];
-
+/**
+ *
+ * @param universElement
+ */
 Editor.prototype.createObject = function (universElement) {
+    if (!multiMaterial) multiMaterial = this.loadMultiMaterial();
     var geometry, object3D;
     switch (universElement.type) {
         case ELEMENT.DOMINO : //x, y, z
@@ -99,28 +120,36 @@ Editor.prototype.createObject = function (universElement) {
             this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 0, 1), universElement.rotation._z);
             break;
         case ELEMENT.SPHERE :
-            geometry = new THREE.SphereGeometry(universElement.radius, 80, 80);
+            geometry = new THREE.SphereGeometry(universElement.radius, 15, 15);
             object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
             object3D.position.set(universElement.position._x, geometry.radius + universElement.position._y + 1, universElement.position._z);
             break;
     }
-
+    object3D.overdraw = true;
     scene.add(object3D);
     universElement.geometry3D = geometry;
     universElement.object3D = object3D;
 };
 
 var rotObjectMatrix;
+/**
+ *
+ * @param object
+ * @param axis
+ * @param radians
+ */
 Editor.prototype.rotateAroundObjectAxis = function (object, axis, radians) {
     rotObjectMatrix = new THREE.Matrix4;
     rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
     object.matrix.multiply(rotObjectMatrix);
-
     // new code for Three.js r50+
     object.rotation.setEulerFromRotationMatrix(object.matrix);
-
 };
 
+/**
+ *
+ * @param object
+ */
 Editor.prototype.removeObject = function (object) {
     scene.remove(object);
 };

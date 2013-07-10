@@ -1,8 +1,16 @@
+/**
+ *
+ * @type {{SPHERE: {value: number, name: string, code: string}, DOMINO: {value: number, name: string, code: string}}}
+ */
 var ELEMENT = {
     SPHERE: {value: 0, name: "Sphere", code: "s"},
     DOMINO: {value: 1, name: "Domino", code: "d"}
 };
 
+/**
+ *
+ * @constructor
+ */
 function Element3D() {
     this.id = "noID";
     this.displayedName = "Element3D";
@@ -12,12 +20,23 @@ function Element3D() {
     this.geometry3D = {};
 }
 
+/**
+ *
+ * @param array
+ * @param obj
+ */
 Element3D.addToArray = function (array, obj) {
     var n = array.length;
     for (var i = 0; i < n; i++) if (obj == array[i]) return;
     array.push(obj);
 };
 
+/**
+ *
+ * @param property
+ * @param value
+ * @returns {boolean}
+ */
 Element3D.prototype.setPosition = function (property, value) {
 
     var done = true;
@@ -34,6 +53,10 @@ Element3D.prototype.setPosition = function (property, value) {
 };
 
 // Persistance functions
+/**
+ *
+ * @returns {{}}
+ */
 Element3D.prototype.save = function () {
     var object = {};
     object.id = this.id;
@@ -41,6 +64,10 @@ Element3D.prototype.save = function () {
     return object;
 };
 
+/**
+ *
+ * @param object
+ */
 Element3D.prototype.load = function (object) {
     this.id = object.id;
     this.position = Coordinates3D.prototype.load(object.position);

@@ -4,6 +4,11 @@
  * Time: 14:03
  */
 
+/**
+ *
+ * @param evt
+ * @returns {*}
+ */
 function getMousePos(evt) {
     if (evt.pageX || evt.pageY) {
         return {
@@ -17,14 +22,28 @@ function getMousePos(evt) {
     };
 }
 
+/**
+ *
+ * @returns {boolean}
+ */
 function isIE() {
     return (navigator.userAgent.indexOf("MSIE") > -1);
 }
 
+/**
+ *
+ * @returns {string}
+ */
 function getMouseWheelEventName() {
     return (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel";
 }
 
+/**
+ *
+ * @param event
+ * @param classname
+ * @param elementname
+ */
 function switchClass(event, classname, elementname) {
     if (!event) event = window.event;
     var target = {};

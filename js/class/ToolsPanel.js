@@ -5,22 +5,30 @@
  */
 
 
-
+/**
+ *
+ * @constructor
+ */
 function ToolsPanel() {
 
     ToolsPanel.panel = DOM.createElement("DIV", "toolspanel", null);
     ToolsPanel.panel.className = "toolspanel";
-    DominoJS.editor.element.appendChild(ToolsPanel.panel);
+    MainController.editor.element.appendChild(ToolsPanel.panel);
 }
 
+/**
+ *
+ * @param type
+ * @param imagePath
+ */
 ToolsPanel.prototype.addTool = function (type, imagePath) {
     var toolDiv = DOM.createElement("DIV", "tool" + type.name, null);
     toolDiv.className = "panelTool";
 
     DOM.hookEvent(toolDiv, "click", function () {
-        var newElement = DominoJS.univers.createElement(type);
-        DominoJS.propertypage.propertyChange(newElement, 'select');
-        DominoJS.temp_var.activated = newElement;
+        var newElement = MainController.univers.createElement(type);
+        MainController.propertypage.propertyChange(newElement, 'select');
+        MainController.temp_var.activated = newElement;
     });
 
     if (imagePath) {

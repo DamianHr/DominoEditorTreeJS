@@ -4,9 +4,24 @@
  * Time: 21:10
  */
 
+/**
+ *
+ * @constructor
+ */
 function NumberInput() {
 }
 
+/**
+ *
+ * @param name
+ * @param width
+ * @param value
+ * @param onChangeHandler
+ * @param title
+ * @param min
+ * @param max
+ * @returns {*}
+ */
 NumberInput.prototype.createControl = function (name, width, value, onChangeHandler, title, min, max) {
 
     var container = DOM.createElement("DIV", "NumberInput", null);
@@ -75,6 +90,10 @@ NumberInput.prototype.createControl = function (name, width, value, onChangeHand
     return container;
 };
 
+/**
+ *
+ * @param event
+ */
 NumberInput.numberUp = function (event) {
     var container = DOM.getEventTarget(event, 'NumberInput');
     var input = container.childNodes[1].firstChild;
@@ -88,6 +107,10 @@ NumberInput.numberUp = function (event) {
     input.onChangeHandler(input, input.id, input.value);
 };
 
+/**
+ *
+ * @param event
+ */
 NumberInput.numberDown = function (event) {
     var container = DOM.getEventTarget(event, 'NumberInput');
     var input = container.childNodes[1].firstChild;
@@ -101,6 +124,10 @@ NumberInput.numberDown = function (event) {
     input.onChangeHandler(input, input.id, input.value);
 };
 
+/**
+ *
+ * @param event
+ */
 NumberInput.numberWheel = function (event) {
     var input = event.srcElement;
     var min = parseInt(input.getAttribute("min"));
@@ -112,6 +139,11 @@ NumberInput.numberWheel = function (event) {
     input.onChangeHandler(input, input.id, input.value);
 };
 
+/**
+ *
+ * @param obj
+ * @param value
+ */
 NumberInput.update = function (obj, value) {
     var target = DOM.findNodeByName(obj, "INPUT", "NumberInput", true);
     if (target) target.value = value;
