@@ -1,5 +1,5 @@
 /**
- *
+ * Represent the two types of object available in the editor
  * @type {{SPHERE: {value: number, name: string, code: string}, DOMINO: {value: number, name: string, code: string}}}
  */
 var ELEMENT = {
@@ -23,7 +23,7 @@ function Element3D() {
 }
 
 /**
- *
+ * Add a object in the main collection of objects
  * @param array
  * @param obj
  */
@@ -34,7 +34,7 @@ Element3D.addToArray = function (array, obj) {
 };
 
 /**
- *
+ *  Set the position on the current element
  * @param property
  * @param value
  * @returns {boolean}
@@ -57,6 +57,11 @@ Element3D.prototype.setPosition = function (property, value) {
     return done;
 };
 
+/**
+ * Set the 'firstToMove' properti of the current object
+ * @param property
+ * @returns {boolean}
+ */
 Element3D.prototype.setFirstToMove = function (property) {
 
     var done = false;
@@ -70,7 +75,7 @@ Element3D.prototype.setFirstToMove = function (property) {
 
 // Persistance functions
 /**
- *
+ * Retrieve the object informations for the saving process
  * @returns {{}}
  */
 Element3D.prototype.save = function () {
@@ -83,7 +88,7 @@ Element3D.prototype.save = function () {
 };
 
 /**
- *
+ * Set the object informations for the loading process
  * @param object
  */
 Element3D.prototype.load = function (object) {

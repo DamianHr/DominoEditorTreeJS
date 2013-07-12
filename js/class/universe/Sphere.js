@@ -1,3 +1,8 @@
+/**
+ * Constructor of the Sphere class
+ * Represent a sphere object on the scene
+ * @constructor
+ */
 function Sphere(position, rotation, radius) {
     Element3D.apply(this);
 
@@ -11,7 +16,7 @@ function Sphere(position, rotation, radius) {
 MainController.copyPrototype(Sphere, Element3D);
 
 /**
- *
+ * Set a propety of the object
  * @param property
  * @param value
  */
@@ -29,7 +34,7 @@ Sphere.prototype.setProperties = function (property, value) {
 };
 
 /**
- *
+ * Set the rotation of the object
  * @param value
  */
 Sphere.prototype.setRotation = function (value) {
@@ -37,7 +42,7 @@ Sphere.prototype.setRotation = function (value) {
 };
 
 /**
- *
+ * Set the radius of the object
  * @param value
  */
 Sphere.prototype.setRadius = function (value) {
@@ -46,7 +51,7 @@ Sphere.prototype.setRadius = function (value) {
 
 // Persistance functions
 /**
- *
+ * Retrieve the object informations for the saving process
  * @returns {*}
  */
 Sphere.prototype.save = function () {
@@ -57,7 +62,7 @@ Sphere.prototype.save = function () {
 };
 
 /**
- *
+ * Set the object informations for the loading process
  * @param object
  */
 Sphere.prototype.load = function (object) {

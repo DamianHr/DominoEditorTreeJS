@@ -76,7 +76,7 @@ function Editor() {
 }
 
 /**
- *
+ *  Generic function to start the animation of the canvas
  */
 Editor.prototype.animate = function () {
     requestAnimationFrame(Editor.prototype.animate);
@@ -85,17 +85,14 @@ Editor.prototype.animate = function () {
 };
 
 /**
- *
+ *  Generic function to start the update loop of the canvas
  */
 Editor.prototype.update = function () {
-    if (keyboard.pressed("z")) {
-        // do something
-    }
     controls.update();
     stats.update();
 };
 /**
- *
+ * Load the multiMateriel textures
  * @returns {Array}
  */
 Editor.prototype.loadMultiMaterial = function () {
@@ -107,7 +104,7 @@ Editor.prototype.loadMultiMaterial = function () {
 }
 
 /**
- *
+ * Create a object in the canvas
  * @param universElement
  */
 Editor.prototype.createObject = function (universElement) {
@@ -139,7 +136,7 @@ Editor.prototype.createObject = function (universElement) {
 
 var rotObjectMatrix;
 /**
- *
+ * Rotate a object around a axis
  * @param object
  * @param axis
  * @param radians
@@ -152,6 +149,10 @@ Editor.prototype.rotateAroundObjectAxis = function (object, axis, radians) {
     object.rotation.setEulerFromRotationMatrix(object.matrix);
 };
 
+/**
+ * Draw a Arrow to show movement axis
+ * @param universElement
+ */
 Editor.prototype.drawArrowHelper = function (universElement) {
     if (arrow) scene.remove(arrow);
     var normal = new THREE.Vector3(0, 0, 1);
@@ -167,9 +168,10 @@ Editor.prototype.drawArrowHelper = function (universElement) {
 };
 
 /**
- *
+ *  Remove a object of the scene
  * @param object
  */
 Editor.prototype.removeObject = function (object) {
     scene.remove(object);
+    if (scene.__objects.length >= 5) scene.remove(arrow);
 };

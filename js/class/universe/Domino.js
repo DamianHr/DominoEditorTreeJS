@@ -1,5 +1,6 @@
 /**
- *
+ * Constructor of the Domino class
+ * Represent a domino object on the scene
  * @constructor
  */
 function Domino(position, dimension, rotation) {
@@ -15,7 +16,7 @@ function Domino(position, dimension, rotation) {
 MainController.copyPrototype(Domino, Element3D);
 
 /**
- *
+ * Set a propety of the object
  * @param property
  * @param value
  */
@@ -33,7 +34,7 @@ Domino.prototype.setProperties = function (property, value) {
 };
 
 /**
- *
+ *  Set the dimension of the object
  * @param property
  * @param value
  */
@@ -44,7 +45,7 @@ Domino.prototype.setDimension = function (property, value) {
 };
 
 /**
- *
+ * Set the rotation of the object
  * @param property
  * @param value
  */
@@ -56,7 +57,7 @@ Domino.prototype.setRotation = function (property, value) {
 
 // Persistance functions
 /**
- *
+ * Retrieve the object informations for the saving process
  * @returns {*}
  */
 Domino.prototype.save = function () {
@@ -67,7 +68,7 @@ Domino.prototype.save = function () {
 };
 
 /**
- *
+ * Set the object informations for the loading process
  * @param object
  */
 Domino.prototype.load = function (object) {

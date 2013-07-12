@@ -5,7 +5,7 @@
  */
 
 /**
- *
+ * Represent a Vector3
  * @param x
  * @param y
  * @param z
@@ -19,7 +19,7 @@ function Coordinates3D(_x, _y, _z) {
 
 // Persistence function
 /**
- *
+ * Return the object values
  * @returns {{}}
  */
 Coordinates3D.prototype.save = function () {

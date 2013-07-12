@@ -7,6 +7,15 @@
 function Checkbox() {
 }
 
+/**
+ * Create a DIV for a specific checkbox input
+ * @param name
+ * @param value
+ * @param onChangeHandler
+ * @param label
+ * @param title
+ * @returns {*}
+ */
 Checkbox.prototype.createControl = function (name, value, onChangeHandler, label, title) {
     var checkbox = DOM.createElement("DIV", 'checkbox', null);
     checkbox.className = 'inputControl';

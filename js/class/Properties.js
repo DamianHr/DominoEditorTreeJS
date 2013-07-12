@@ -5,7 +5,8 @@
  */
 
 /**
- *
+ * Constructor of the Properties class
+ * Manage the properties DIV
  * @constructor
  */
 function Properties() {
@@ -26,14 +27,6 @@ function Properties() {
     this.containerDiv.className = "propertiesContainer";
     this.column.appendChild(this.containerDiv);
 
-    /*
-     var colors = [];
-     colors[0] = new Array("#000000", "#808080", "#800000", "#808000");
-     colors[1] = new Array("#008000", "#008080", "#000080", "#800080");
-     colors[2] = new Array("#c0c0c0", "#ff0000", "#ffff00", "#00ff00");
-     colors[3] = new Array("#00ffff", "#0000ff", "#ff00ff", "#ffffff");
-     */
-    //this.colorPalette = new ColorPalette(colors);
     this.numberInput = new NumberInput();
     this.checkbox = new Checkbox();
 }

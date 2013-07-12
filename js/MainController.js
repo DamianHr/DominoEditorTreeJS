@@ -49,7 +49,7 @@ MainController.getClassName = function (object) {
 // modules to add to the HTML page
 MainController.Modules = [];
 // three.js libs
-MainController.Modules.push('libs/three.min');
+//MainController.Modules.push('libs/three.min');
 MainController.Modules.push('libs/three.keyboard');
 MainController.Modules.push('libs/three.trackball');
 MainController.Modules.push('libs/threex.fullsize');

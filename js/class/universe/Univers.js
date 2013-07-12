@@ -6,11 +6,11 @@
 
 function Univers() {
     this.elements = [];
-    this.firstToMove;
+    this.firstToMove = null;
 }
 
 /**
- *
+ * Create a element in the univers of objects
  * @param elementType
  * @param position
  * @param dimension
@@ -38,7 +38,7 @@ Univers.prototype.createElement = function (elementType, id, position, rotation,
 };
 
 /**
- *
+ *  Add a element to the collection of elements of the univers
  * @param element
  * @returns {boolean}
  */
@@ -51,7 +51,7 @@ Univers.prototype.addElement = function (element) {
 };
 
 /**
- *
+ * Delete a element of the collection of elements of the univers
  * @param id
  */
 Univers.prototype.deleteElement = function (id) {
@@ -60,7 +60,7 @@ Univers.prototype.deleteElement = function (id) {
 };
 
 /**
- *
+ * Fire the propeties changing of the propertypage
  * @param event
  * @returns {boolean}
  */
@@ -78,7 +78,7 @@ Univers.prototype.select = function (event) {
 };
 
 /**
- *
+ * Return a random unique id
  * @returns {string}
  */
 Univers.prototype.generateElementId = function () {
@@ -91,7 +91,7 @@ Univers.prototype.generateElementId = function () {
 };
 
 /**
- *
+ * Return a readable name using the type of the object from the canvas
  * @param type
  * @returns {string}
  */
@@ -102,6 +102,11 @@ Univers.prototype.generateElementRealName = function (type) {
     return type.name + ' ' + index;
 };
 
+/**
+ * Set the firstToMove attribut for a object
+ * @param newFirstToMove
+ * @returns {boolean}
+ */
 Univers.prototype.setFirstToMove = function (newFirstToMove) {
     if (this.firstToMove) {
         if (this.firstToMove == newFirstToMove) return true;

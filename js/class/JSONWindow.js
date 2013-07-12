@@ -5,7 +5,7 @@
  */
 
 /**
- *
+ * Create a mask and a window on the editor interface
  * @param data
  * @constructor
  */
@@ -44,6 +44,14 @@ function JSONWindow(data) {
             }
         });
         buttonContainer.appendChild(loadButton);
+    } else {
+        var downloadButton = DOM.createElement("INPUT", 'downloadButton', 'button');
+        downloadButton.className = 'downloadButton button';
+        downloadButton.value = 'Download';
+        DOM.hookEvent(downloadButton, 'click', function () {
+            document.location = 'data:Application/octet-stream,' + encodeURIComponent(data);
+        });
+        buttonContainer.appendChild(downloadButton);
     }
 
     var closeButton = DOM.createElement("INPUT", 'closeButton', 'button');
@@ -55,6 +63,9 @@ function JSONWindow(data) {
     buttonContainer.appendChild(closeButton);
 }
 
+/**
+ * remove the element of the window from the DOM
+ */
 JSONWindow.prototype.closeWindow = function () {
     document.body.removeChild(document.body.lastChild);
     document.body.removeChild(document.body.lastChild);
