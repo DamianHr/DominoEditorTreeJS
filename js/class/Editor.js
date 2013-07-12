@@ -3,7 +3,7 @@
  * Date: 29/06/13
  * Time: 00:12
  */
-var scene, camera, renderer, container, stats, controls;
+var scene, camera, renderer, container, stats, controls, arrow;
 var keyboard = new THREEx.KeyboardState();
 var multiMaterial;
 
@@ -24,6 +24,7 @@ function Editor() {
     scene.add(camera);
     camera.position.set(0, 150, 400);
     camera.lookAt(scene.position);
+
     // RENDERER
     if (Detector.webgl)
         renderer = new THREE.WebGLRenderer({antialias: true});
@@ -36,10 +37,12 @@ function Editor() {
     // CONTROLS
     controls = new THREE.TrackballControls(camera, this.element);
     controls.rotateSpeed = 0.05;
+    controls.minDistance = 150;
+    controls.maxDistance = 1500;
     //controls = new THREE.FirstPersonControls(camera);
     // EVENTS
     THREEx.WindowResize(renderer, camera);
-    THREEx.FullScreen.bindKey({ charCode: 'm'.charCodeAt(0) });
+    //THREEx.FullScreen.bindKey({ charCode: 121 });
     // STATS
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -97,8 +100,8 @@ Editor.prototype.update = function () {
  */
 Editor.prototype.loadMultiMaterial = function () {
     var elementTexture = new THREE.ImageUtils.loadTexture('./img/wood.jpg');
-    var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
-    //var elementMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
+    //var elementMaterial = new THREE.MeshBasicMaterial({ map: elementTexture });
+    var elementMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
     var wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, transparent: true });
     return [ elementMaterial, wireframeMaterial ];
 }
@@ -112,23 +115,26 @@ Editor.prototype.createObject = function (universElement) {
     var geometry, object3D;
     switch (universElement.type) {
         case ELEMENT.DOMINO : //x, y, z
-            geometry = new THREE.CubeGeometry(universElement.dimension._x, universElement.dimension._y, universElement.dimension._z, 2, 2, 2);
+            geometry = new THREE.CubeGeometry(universElement.dimension.x, universElement.dimension.y, universElement.dimension.z, 2, 2, 2);
             object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
-            object3D.position.set(universElement.position._x, geometry.height / 2 + universElement.position._y + 1, universElement.position._z);
-            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(1, 0, 0), universElement.rotation._x);
-            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 1, 0), universElement.rotation._y);
-            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 0, 1), universElement.rotation._z);
+            object3D.position.set(universElement.position.x, geometry.height / 2 + universElement.position.y + 1, universElement.position.z);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(1, 0, 0), universElement.rotation.x);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 1, 0), universElement.rotation.y);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 0, 1), universElement.rotation.z);
             break;
         case ELEMENT.SPHERE :
             geometry = new THREE.SphereGeometry(universElement.radius, 15, 15);
             object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
-            object3D.position.set(universElement.position._x, geometry.radius + universElement.position._y + 1, universElement.position._z);
+            object3D.position.set(universElement.position.x, geometry.radius + universElement.position.y + 1, universElement.position.z);
+            this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 1, 0), universElement.rotation);
             break;
     }
     object3D.overdraw = true;
     scene.add(object3D);
     universElement.geometry3D = geometry;
     universElement.object3D = object3D;
+
+    this.drawArrowHelper(universElement);
 };
 
 var rotObjectMatrix;
@@ -144,6 +150,20 @@ Editor.prototype.rotateAroundObjectAxis = function (object, axis, radians) {
     object.matrix.multiply(rotObjectMatrix);
     // new code for Three.js r50+
     object.rotation.setEulerFromRotationMatrix(object.matrix);
+};
+
+Editor.prototype.drawArrowHelper = function (universElement) {
+    if (arrow) scene.remove(arrow);
+    var normal = new THREE.Vector3(0, 0, 1);
+    var origin = new THREE.Vector3(universElement.position.x,
+        universElement.type === ELEMENT.DOMINO ? universElement.geometry3D.height / 2 + universElement.position.y + 1 : universElement.radius + universElement.position.y + 1,
+        universElement.position.z);
+    normal.normalize();
+
+    var length = universElement.type == ELEMENT.DOMINO ? universElement.dimension.z * 2 : universElement.radius * 1.5;
+
+    arrow = new THREE.ArrowHelper(normal, origin, length, 0xff0000);
+    scene.add(arrow);
 };
 
 /**

@@ -19,7 +19,7 @@ MainController.returnfalse = function () {
 };
 
 // constants
-MainController.LATENCY = 1000;
+MainController.LATENCY = 1500;
 
 // objects
 MainController.univers = {};
@@ -59,6 +59,7 @@ MainController.Modules.push('libs/Stats');
 MainController.Modules.push('libs/FirstPersonControl');
 MainController.Modules.push('libs/scroller');
 // domino.js libs
+MainController.Modules.push('class/Checkbox');
 MainController.Modules.push('class/Coordinates3D');
 MainController.Modules.push('class/DOM');
 MainController.Modules.push('class/Editor');
@@ -176,5 +177,14 @@ MainController.hookEvent(window, "load", function () {
 });
 
 MainController.save = function () {
-
+    var persisted = {};
+    persisted.projetName = this.header.getProjetName() ? this.header.getProjetName() : "Domino Engine Project";
+    persisted.objects = this.univers.save();
+    return JSON.stringify(persisted, undefined, 2)
 };
+
+MainController.load = function (persisted) {
+    this.header.setProjetName(persisted.projetName);
+    this.univers.load(persisted.objects);
+};
+

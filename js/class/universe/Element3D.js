@@ -16,6 +16,8 @@ function Element3D() {
     this.displayedName = "Element3D";
     this.position = new Coordinates3D(0, 0, 0);
 
+    this.firstToMove = false;
+
     this.object3D = {};
     this.geometry3D = {};
 }
@@ -40,17 +42,31 @@ Element3D.addToArray = function (array, obj) {
 Element3D.prototype.setPosition = function (property, value) {
 
     var done = true;
-    if (property == 'X') this.position._x = value;
-    else if (property == 'Y') this.position._y = value;
-    else if (property == 'Z') this.position._z = value;
+    if (property == 'X') this.position.x = value;
+    else if (property == 'Y') this.position.y = value;
+    else if (property == 'Z') this.position.z = value;
     else done = false;
 
     if (done === true) {
-        var y = this.type === ELEMENT.DOMINO ? this.dimension._y / 2 + this.position._y + 1 : this.radius + this.position._y + 1;
-        this.object3D.position.set(this.position._x, y, this.position._z);
+        var y = this.type === ELEMENT.DOMINO ? this.dimension.y / 2 + this.position.y + 1 : this.radius + this.position.y + 1;
+        this.object3D.position.set(this.position.x, y, this.position.z);
+        arrow.position = new THREE.Vector3(this.position.x,
+            this.type === ELEMENT.DOMINO ? this.geometry3D.height / 2 + this.position.y + 1 : this.radius + this.position.y + 1,
+            this.position.z);
     }
     return done;
 };
+
+Element3D.prototype.setFirstToMove = function (property) {
+
+    var done = false;
+    if (property == 'firstToMove') {
+        this.firstToMove = true;
+        done = true;
+    }
+    return done;
+};
+
 
 // Persistance functions
 /**
@@ -60,7 +76,9 @@ Element3D.prototype.setPosition = function (property, value) {
 Element3D.prototype.save = function () {
     var object = {};
     object.id = this.id;
+    object.type = this.type.code;
     object.position = this.position.save();
+    if (this.firstToMove) object.firstToMove = 1;
     return object;
 };
 
@@ -70,5 +88,7 @@ Element3D.prototype.save = function () {
  */
 Element3D.prototype.load = function (object) {
     this.id = object.id;
-    this.position = Coordinates3D.prototype.load(object.position);
+    this.type = object.type.code === ELEMENT.DOMINO.code ? ELEMENT.DOMINO : ELEMENT.SPHERE;
+    this.position = new Coordinates3D(object.position.x, object.position.y, object.position.z);
+    this.firstToMove = object.firstToMove === 1;
 };

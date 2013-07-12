@@ -11,10 +11,10 @@
  * @param z
  * @constructor
  */
-function Coordinates3D(x, y, z) {
-    this._x = x;
-    this._y = y;
-    this._z = z;
+function Coordinates3D(_x, _y, _z) {
+    this.x = _x;
+    this.y = _y;
+    this.z = _z;
 }
 
 // Persistence function
@@ -24,18 +24,8 @@ function Coordinates3D(x, y, z) {
  */
 Coordinates3D.prototype.save = function () {
     var object = {};
-    object.x = this._x;
-    object.y = this._y;
-    object.z = this._z;
+    object.x = this.x;
+    object.y = this.y;
+    object.z = this.z;
     return object;
-};
-
-/**
- *
- * @param object
- */
-Coordinates3D.prototype.load = function (object) {
-    this._x = object.x;
-    this._y = object.y;
-    this._z = object.z;
 };

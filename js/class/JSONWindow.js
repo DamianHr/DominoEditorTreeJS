@@ -20,7 +20,6 @@ function JSONWindow(data) {
 
     var area = DOM.createElement("TEXTAREA", 'areaJson', null);
     area.className = 'areaJson';
-    area.readOnly = 'readonly';
     if (data) area.value = data;
     window.appendChild(area);
 
@@ -33,7 +32,16 @@ function JSONWindow(data) {
         loadButton.className = 'loadButton button';
         loadButton.value = 'Load';
         DOM.hookEvent(loadButton, 'click', function () {
-
+            try {
+                var json = JSON.parse(area.value);
+            }
+            catch (e) {
+                alert('Sorry, the JSON is invalid');
+            }
+            if (json) {
+                MainController.load(json);
+                JSONWindow.prototype.closeWindow();
+            }
         });
         buttonContainer.appendChild(loadButton);
     }
@@ -42,8 +50,12 @@ function JSONWindow(data) {
     closeButton.className = 'closeButton button';
     closeButton.value = 'Close';
     DOM.hookEvent(closeButton, 'click', function () {
-        document.body.removeChild(document.body.lastChild);
-        document.body.removeChild(document.body.lastChild);
+        JSONWindow.prototype.closeWindow();
     });
     buttonContainer.appendChild(closeButton);
 }
+
+JSONWindow.prototype.closeWindow = function () {
+    document.body.removeChild(document.body.lastChild);
+    document.body.removeChild(document.body.lastChild);
+};

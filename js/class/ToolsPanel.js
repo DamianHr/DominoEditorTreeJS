@@ -27,7 +27,7 @@ ToolsPanel.prototype.addTool = function (type, imagePath) {
 
     DOM.hookEvent(toolDiv, "click", function () {
         var newElement = MainController.univers.createElement(type);
-        MainController.propertypage.propertyChange(newElement, 'select');
+        MainController.propertypage.propertyChange(newElement);
         MainController.temp_var.activated = newElement;
     });
 

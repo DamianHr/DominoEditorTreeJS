@@ -8,7 +8,8 @@ function Footer() {
 
     //this.element = DOM.createElement("DIV", "footerDiv");
     //this.element.className = "footer";
-    Footer.element = document.getElementById("footer");
+    this.element = document.getElementById("footer");
+    this.element.appendChild(document.createTextNode("Projet Domino Engine, ESGI 2013, HERCUN - CONSTANT - BELSON"));
 }
 
 /**
@@ -16,13 +17,13 @@ function Footer() {
  * @param text
  */
 Footer.prototype.displayMessage = function (text) {
-    Footer.prototype.clearNodes();
-    Footer.element.appendChild(document.createTextNode(text));
+    this.clearNodes();
+    this.element.appendChild(document.createTextNode(text));
 }
 
 /**
  *
  */
 Footer.prototype.clearNodes = function () {
-    while (Footer.element.firstChild) Footer.element.removeChild(Footer.element.firstChild);
+    while (this.element.firstChild) this.element.removeChild(this.element.firstChild);
 }

@@ -6,30 +6,28 @@
 
 function Univers() {
     this.elements = [];
+    this.firstToMove;
 }
 
 /**
  *
  * @param elementType
+ * @param position
+ * @param dimension
+ * @param rotation
  * @returns {*}
  */
-Univers.prototype.createElement = function (elementType) {
+Univers.prototype.createElement = function (elementType, id, position, rotation, dimension) {
     var element;
 
-    switch (elementType) {
-        case ELEMENT.DOMINO :
-            element = new Domino();
-            break;
-        case ELEMENT.SPHERE :
-            element = new Sphere();
-            break;
-        default :
-            break;
-    }
+    if (elementType === ELEMENT.DOMINO || elementType === ELEMENT.DOMINO.code)
+        element = new Domino(position, dimension, rotation);
+    else if (elementType === ELEMENT.SPHERE || elementType === ELEMENT.SPHERE.code)
+        element = new Sphere(position, dimension, rotation);
+    else return;
 
-    element.id = this.generateElementId();
-    element.displayedName = this.generateElementRealName(elementType);
-    element.type = elementType;
+    element.id = id ? id : this.generateElementId();
+    element.displayedName = this.generateElementRealName(element.type);
 
     MainController.editor.createObject(element);
     this.addElement(element);
@@ -73,7 +71,7 @@ Univers.prototype.select = function (event) {
     if (this.elements[firer.id]) {
         if (MainController.temp_var.activated != this.elements[firer.id]) {
             MainController.temp_var.activated = this.elements[firer.id]
-            MainController.propertypage.propertyChange(this.elements[firer.id], 'select');
+            MainController.propertypage.propertyChange(this.elements[firer.id]);
         }
     }
     return false;
@@ -104,41 +102,43 @@ Univers.prototype.generateElementRealName = function (type) {
     return type.name + ' ' + index;
 };
 
+Univers.prototype.setFirstToMove = function (newFirstToMove) {
+    if (this.firstToMove) {
+        if (this.firstToMove == newFirstToMove) return true;
+        if (!confirm("An element is already assigned to 'First to move'.\n Do you confirm the reassignment?")) return false;
+    }
+
+    if (this.elements[this.firstToMove]) this.elements[this.firstToMove].firstToMove = false;
+    this.elements[newFirstToMove].firstToMove = true;
+    this.firstToMove = newFirstToMove;
+    return true;
+};
+
 /**
- *
+ * Stringify all the given object, for the JSON transformation
  * @return {*}
  */
-Univers.prototype.persist = function () {
-    var persisted = {};
-    persisted.connections = [];
-    persisted.blocks = [];
-    for (var element in this.editor.elements) {
-        if (this.editor.elements[element].type == ELEMENT.DOMINO)
-            persisted.blocks.push(this.editor.elements[element].save());
-        else if (this.editor.elements[element].type == ELEMENT.SPHERE)
-            persisted.connections.push(this.editor.elements[element].save());
+Univers.prototype.save = function () {
+    var elements = [];
+    var allElements = this.elements;
+    for (var element in allElements) {
+        elements.push(allElements[element].save());
     }
-    return JSON.stringify(persisted);
+    return elements;
 };
 
 /*
  * Parses the given JSON string and instantiates the corresponding
  * objects and adds them to the diagram.
  */
-Univers.prototype.load = function (jsonString) {
-
-    var persisted = JSON.parse(jsonString);
-    /*
-     for (var i=0; i<persisted.blocks.length; i++) {
-     var figure = Palette.factory.generateFigure(persisted.blocks[i]);
-     var seq = parseInt(figure.id.substring(6));
-     if (!isNaN(seq)) this.sequence = Math.max(seq, this.sequence);
-     }
-
-     for (var i=0; i<persisted.connections.length; i++) {
-     var figure = Palette.factory.generateFigure(persisted.connections[i]);
-     var seq = parseInt(figure.id.substring(6));
-     if (!isNaN(seq)) this.sequence = Math.max(seq, this.sequence);
-     }
-     */
+Univers.prototype.load = function (elements) {
+    for (var index in elements) {
+        var newElement = MainController.univers.createElement(elements[index].type,
+            elements[index].id,
+            elements[index].position,
+            elements[index].rotation,
+            elements[index].dimension);
+        MainController.propertypage.propertyChange(newElement);
+        MainController.temp_var.activated = newElement;
+    }
 };

@@ -35,6 +35,7 @@ function Properties() {
      */
     //this.colorPalette = new ColorPalette(colors);
     this.numberInput = new NumberInput();
+    this.checkbox = new Checkbox();
 }
 
 /**
@@ -42,41 +43,39 @@ function Properties() {
  * @param firer
  * @param action
  */
-Properties.prototype.propertyChange = function (firer, action) {
+Properties.prototype.propertyChange = function (firer) {
     this.clearNodes();
 
-    if ("select" == action) {
-        //this.table.setAttribute("id", firer.id);
+    var className = MainController.getClassName(firer)
+    var group;
 
-        var className = MainController.getClassName(firer)
-        var group;
-        switch (className) {
-            case "Domino" :
-                group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
-                this.update(firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
-                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', 0, 9999));
-                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', -9999, 9999));
-                group = this.createPropertiesGroup('Rotation', 'propertiesGroup', 'propertiesRotation');
-                this.update(firer.rotation._x, group.id, this.numberInput.createControl('rX', 20, firer.rotation._x, Properties.prototype.onChangeHandler, 'Rotation around the X axis for the object.', -50, 50));
-                this.update(firer.rotation._y, group.id, this.numberInput.createControl('rY', 20, firer.rotation._y, Properties.prototype.onChangeHandler, 'Rotation around the Y axis for the object.', -50, 50));
-                this.update(firer.rotation._z, group.id, this.numberInput.createControl('rZ', 20, firer.rotation._z, Properties.prototype.onChangeHandler, 'Rotation around the Z axis for the object.', -50, 50));
-                group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
-                this.update(firer.dimension._x, group.id, this.numberInput.createControl('W', 20, firer.dimension._x, Properties.prototype.onChangeHandler, 'Dimension on the X axis for the object.', 1, 500));
-                this.update(firer.dimension._y, group.id, this.numberInput.createControl('L', 20, firer.dimension._y, Properties.prototype.onChangeHandler, 'Dimension on the Y axis for the object.', 1, 500));
-                this.update(firer.dimension._z, group.id, this.numberInput.createControl('D', 20, firer.dimension._z, Properties.prototype.onChangeHandler, 'Dimension on the Z axis for the object.', 1, 500));
-                break;
-            case "Sphere" :
-                group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
-                this.update(firer.position._x, group.id, this.numberInput.createControl('X', 20, firer.position._x, Properties.prototype.onChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
-                this.update(firer.position._y, group.id, this.numberInput.createControl('Y', 20, firer.position._y, Properties.prototype.onChangeHandler, 'Position on the Y axis for the object.', 0, 9999));
-                this.update(firer.position._z, group.id, this.numberInput.createControl('Z', 20, firer.position._z, Properties.prototype.onChangeHandler, 'Position on the Z axis for the object.', -9999, 9999));
-                group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
-                this.update(firer.radius, group.id, this.numberInput.createControl('R', 20, firer.radius, Properties.prototype.onChangeHandler, 'Radius of the object.', 2, 500));
-                break;
-            default:
-                break;
-        }
+    group = this.createPropertiesGroup('Position', 'propertiesGroup', 'propertiesPosition');
+    this.update(firer.position.x, group.id, this.numberInput.createControl('X', 20, firer.position.x, Properties.prototype.numberOnChangeHandler, 'Position on the X axis for the object.', -9999, 9999));
+    this.update(firer.position.y, group.id, this.numberInput.createControl('Y', 20, firer.position.y, Properties.prototype.numberOnChangeHandler, 'Position on the Y axis for the object.', 0, 9999));
+    this.update(firer.position.z, group.id, this.numberInput.createControl('Z', 20, firer.position.z, Properties.prototype.numberOnChangeHandler, 'Position on the Z axis for the object.', -9999, 9999));
+
+    switch (className) {
+        case "Domino" :
+            group = this.createPropertiesGroup('Rotation', 'propertiesGroup', 'propertiesRotation');
+            this.update(firer.rotation.x, group.id, this.numberInput.createControl('rX', 20, firer.rotation.x, Properties.prototype.numberOnChangeHandler, 'Rotation around the X axis for the object.', -50, 50));
+            this.update(firer.rotation.y, group.id, this.numberInput.createControl('rY', 20, firer.rotation.y, Properties.prototype.numberOnChangeHandler, 'Rotation around the Y axis for the object.', -50, 50));
+            this.update(firer.rotation.z, group.id, this.numberInput.createControl('rZ', 20, firer.rotation.z, Properties.prototype.numberOnChangeHandler, 'Rotation around the Z axis for the object.', -50, 50));
+            group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
+            this.update(firer.dimension.x, group.id, this.numberInput.createControl('W', 20, firer.dimension.x, Properties.prototype.numberOnChangeHandler, 'Dimension on the X axis for the object.', 1, 500));
+            this.update(firer.dimension.y, group.id, this.numberInput.createControl('L', 20, firer.dimension.y, Properties.prototype.numberOnChangeHandler, 'Dimension on the Y axis for the object.', 1, 500));
+            this.update(firer.dimension.z, group.id, this.numberInput.createControl('D', 20, firer.dimension.z, Properties.prototype.numberOnChangeHandler, 'Dimension on the Z axis for the object.', 1, 500));
+            break;
+        case "Sphere" :
+            group = this.createPropertiesGroup('Dimension', 'propertiesGroup', 'propertiesDimension');
+            this.update(firer.radius, group.id, this.numberInput.createControl('R', 20, firer.radius, Properties.prototype.numberOnChangeHandler, 'Radius of the object.', 2, 500));
+            //group = this.createPropertiesGroup('Rotation', 'propertiesGroup', 'propertiesRotation');
+            //this.update(firer.rotation, group.id, this.numberInput.createControl('rY', 20, firer.rotation, Properties.prototype.numberOnChangeHandler, 'Rotation around the Y axis for the object.', -50, 50));
+            break;
+        default:
+            break;
     }
+    group = this.createPropertiesGroup('Action', 'propertiesGroup', 'propertiesAction');
+    this.update(firer.firstToMove, group.id, this.checkbox.createControl('firstToMove', firer.firstToMove, Properties.prototype.checkboxOnChangeHandler, 'First to move', 'Designates the first element that starts the simulation'));
 };
 
 /**
@@ -126,32 +125,27 @@ Properties.prototype.clearNodes = function () {
 };
 
 /**
- * Create a checkbox input
- * @param name
- * @return {*}
- */
-Properties.prototype.createCheckBox = function (name) {
-    var input = DOM.createElement("INPUT", name, 'checkbox');
-    input.id = name;
-    input.className = "check";
-    input.style.zIndex = 1;
-    input.onchange = function (event) {
-        var object = DOM.getEventTarget(event, null);
-        Properties.prototype.onChangeHandler(object, object.id, object.value);
-    };
-    return input;
-};
-
-/**
- * Handle all change events
+ * Handle all change events for the input number
  * @param object
  * @param property
  * @param value
  */
-Properties.prototype.onChangeHandler = function (object, property, value) {
+Properties.prototype.numberOnChangeHandler = function (object, property, value) {
     value = parseInt(value);
     var element = MainController.temp_var.activated;
-    if (element) element.setProperties(property, value);
+    if (element) return element.setProperties(property, value);
+    return false;
+};
+
+/**
+ * Handle all change events for the checkbox
+ * @param object
+ * @param property
+ */
+Properties.prototype.checkboxOnChangeHandler = function () {
+    var element = MainController.temp_var.activated;
+    if (element) return MainController.univers.setFirstToMove(element.id);
+    else return false;
 };
 
 /**

@@ -20,7 +20,8 @@ function Header() {
     this.saveButton.className = "saveButton headerButton button";
     this.saveButton.value = "Save";
     DOM.hookEvent(this.saveButton, "click", function () {
-        new JSONWindow('Va manger des queues!');
+        var jsonData = MainController.save();
+        new JSONWindow(jsonData);
     });
     this.element.appendChild(this.saveButton);
 
@@ -38,6 +39,13 @@ function Header() {
     this.titleInput.setAttribute("placeholder", Header.DEFAULT_PROJECT_NAME_TEXT);
     this.element.appendChild(this.titleInput);
 
+    this.resetCameraButton = DOM.createElement("Input", "resetCameraButton", "button");
+    this.resetCameraButton.className = "resetCamButton headerButton button";
+    this.resetCameraButton.value = "Reset Camera";
+    DOM.hookEvent(this.resetCameraButton, "click", function () {
+        controls.reset();
+    });
+    this.element.appendChild(this.resetCameraButton);
 }
 
 /**
