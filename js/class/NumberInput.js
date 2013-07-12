@@ -97,8 +97,8 @@ NumberInput.prototype.createControl = function (name, width, value, onChangeHand
 NumberInput.numberUp = function (event) {
     var container = DOM.getEventTarget(event, 'NumberInput');
     var input = container.childNodes[1].firstChild;
-    var max = parseInt(input.getAttribute("max"));
-    var value = parseInt(input.value);
+    var max = parseFloat(input.getAttribute("max"));
+    var value = parseFloat(input.value);
     if (isNaN(value)) input.value = 0;
     else {
         if (!isNaN(max)) input.value = value > max ? max : ++value;
@@ -114,8 +114,8 @@ NumberInput.numberUp = function (event) {
 NumberInput.numberDown = function (event) {
     var container = DOM.getEventTarget(event, 'NumberInput');
     var input = container.childNodes[1].firstChild;
-    var min = parseInt(input.getAttribute("min"));
-    var value = parseInt(input.value);
+    var min = parseFloat(input.getAttribute("min"));
+    var value = parseFloat(input.value);
     if (isNaN(value)) input.value = 0;
     else {
         if (isNaN(min)) min = 0;
@@ -130,9 +130,9 @@ NumberInput.numberDown = function (event) {
  */
 NumberInput.numberWheel = function (event) {
     var input = event.srcElement;
-    var min = parseInt(input.getAttribute("min"));
-    var max = parseInt(input.getAttribute("max"));
-    var value = parseInt(input.value);
+    var min = parseFloat(input.getAttribute("min"));
+    var max = parseFloat(input.getAttribute("max"));
+    var value = parseFloat(input.value);
     if (isNaN(value)) input.value = 0;
     var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
     input.value = value < min ? min : value > max ? max : value + delta * 2;

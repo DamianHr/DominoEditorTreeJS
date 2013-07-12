@@ -39,10 +39,8 @@ function Editor() {
     controls.rotateSpeed = 0.05;
     controls.minDistance = 150;
     controls.maxDistance = 1500;
-    //controls = new THREE.FirstPersonControls(camera);
     // EVENTS
     THREEx.WindowResize(renderer, camera);
-    //THREEx.FullScreen.bindKey({ charCode: 121 });
     // STATS
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
@@ -120,7 +118,7 @@ Editor.prototype.createObject = function (universElement) {
             this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 0, 1), universElement.rotation.z);
             break;
         case ELEMENT.SPHERE :
-            geometry = new THREE.SphereGeometry(universElement.radius, 15, 15);
+            geometry = new THREE.SphereGeometry(universElement.radius, 20, 20);
             object3D = THREE.SceneUtils.createMultiMaterialObject(geometry.clone(), multiMaterial);
             object3D.position.set(universElement.position.x, geometry.radius + universElement.position.y + 1, universElement.position.z);
             this.rotateAroundObjectAxis(object3D, new THREE.Vector3(0, 1, 0), universElement.rotation);

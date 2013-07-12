@@ -1,7 +1,4 @@
 function MainController() {
-    // TODO:
-    // créer les fenetres de saisies des options
-    // faire la persistence dans les deux sens
 }
 
 //global variables
@@ -19,7 +16,7 @@ MainController.returnfalse = function () {
 };
 
 // constants
-MainController.LATENCY = 1500;
+MainController.LATENCY = 1000;
 
 // objects
 MainController.univers = {};
